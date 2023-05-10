@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "yusu.log",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -8,7 +8,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "lint": "eslint --ext .astro .",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.19.1",
@@ -17,7 +20,20 @@
     "astro": "^2.4.1"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^5.59.5",
+    "eslint": "^8.40.0",
+    "eslint-plugin-astro": "^0.27.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "prettier-plugin-astro": "^0.8.0"
+  },
+  "lint-staged": {
+    "*.{astro,md,mdx}": [
+      "prettier --write",
+      "eslint --ext .astro,.md,.mdx --fix",
+      "git add"
+    ]
   }
 }
