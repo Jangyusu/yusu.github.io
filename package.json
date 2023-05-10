@@ -33,8 +33,8 @@
   },
   "lint-staged": {
     "*.{astro,md,mdx}": [
-      "prettier --write",
-      "eslint --ext .astro,.md,.mdx --fix",
+      "prettier --write .",
+      "eslint --ext .astro .",
       "git add"
     ]
   }
