@@ -9,6 +9,15 @@
         "extraFileExtensions": [".astro"]
       },
       "rules": {}
+    },
+    {
+      "files": ["*.mjs"],
+      "parser": "@babel/eslint-parser",
+      "parserOptions": {
+        "sourceType": "module",
+        "requireConfigFile": false
+      },
+      "rules": {}
     }
   ]
 }
