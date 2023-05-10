@@ -1,1 +1,1 @@
-# yusu.github.io
+# yusu.log
