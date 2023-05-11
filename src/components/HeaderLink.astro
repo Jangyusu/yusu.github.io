@@ -1,16 +1,18 @@
 ---
+import astroConfig from 'astro.config.mjs';
 import type { HTMLAttributes } from 'astro/types';
 
 type Props = HTMLAttributes<'a'>;
 
 const { href, ...props } = Astro.props;
+const { base } = astroConfig;
 
 const { pathname } = Astro.url;
 const isActive = href === pathname || href === pathname.replace(/\/$/, '');
 ---
 
 <a
-  href={href}
+  href={`${base}${href}`}
   class:list={[
     'transition',
     isActive
