@@ -5,6 +5,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://jangyusu.github.io/yusu.log',
+  site: 'https://jangyusu.github.io',
+  base: '/yusu.log',
   integrations: [mdx(), sitemap(), tailwind()],
 });
