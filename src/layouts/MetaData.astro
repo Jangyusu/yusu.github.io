@@ -1,0 +1,35 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  imagePath?: string;
+}
+
+const { title, description, imagePath = '' } = Astro.props;
+---
+
+<meta name="theme-color" content="#60a5fa" />
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+{
+  imagePath && (
+    <meta property="og:image" content={`${Astro.url.origin}${imagePath}`} />
+  )
+}
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+{
+  imagePath && (
+    <meta
+      property="twitter:image"
+      content={`${Astro.url.origin}${imagePath}`}
+    />
+  )
+}

@@ -1,0 +1,21 @@
+<script is:inline>
+  (() => {
+    if (typeof window !== 'undefined') {
+      const $html = document.documentElement;
+      const storageTheme = localStorage.getItem('theme')
+        ? JSON.parse(localStorage.getItem('theme'))
+        : null;
+      const isSystemColorDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
+
+      if (!storageTheme && isSystemColorDark) {
+        $html.classList.add('dark');
+      } else if (storageTheme === 'dark') {
+        $html.classList.add('dark');
+      } else {
+        $html.classList.remove('dark');
+      }
+    }
+  })();
+</script>

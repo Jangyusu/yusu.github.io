@@ -1,29 +1,27 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-import { SITE_TITLE } from '../consts';
+import HeaderLink from '@components/Header.astro';
+import ThemeSwitcher from '@components/ThemeSwitcher.astro';
+import { SITE_TITLE } from '@/consts';
 ---
 
-<header>
-  <h2>
-    {SITE_TITLE}
-  </h2>
-  <nav>
-    <HeaderLink href="/">Home</HeaderLink>
-    <HeaderLink href="/blog">Blog</HeaderLink>
-    <HeaderLink href="/about">About</HeaderLink>
-    <HeaderLink href="https://twitter.com/astrodotbuild" target="_blank">
-      Twitter
-    </HeaderLink>
-    <HeaderLink href="https://github.com/withastro/astro" target="_blank">
-      GitHub
-    </HeaderLink>
-  </nav>
+<header class="mx-auto max-w-screen-lg py-6">
+  <div
+    class="flex flex-col gap-y-3 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <h2
+      class="flex items-center bg-gradient-to-br from-sky-500 to-cyan-400 bg-clip-text text-xl font-bold text-transparent"
+    >
+      {SITE_TITLE}
+    </h2>
+    <div class="flex items-center gap-x-3">
+      <ThemeSwitcher />
+      <nav class="flex gap-x-3 font-medium text-gray-200">
+        <HeaderLink href="/">Home</HeaderLink>
+        <HeaderLink href="/blog">Blog</HeaderLink>
+        <HeaderLink href="https://github.com/Jangyusu" target="_blank">
+          GitHub
+        </HeaderLink>
+      </nav>
+    </div>
+  </div>
 </header>
-<style>
-  header {
-    margin: 0em 0 2em;
-  }
-  h2 {
-    margin: 0.5em 0;
-  }
-</style>

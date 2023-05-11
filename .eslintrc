@@ -11,7 +11,7 @@
       "rules": {}
     },
     {
-      "files": ["*.mjs"],
+      "files": ["*.ts", "*.js", "*.mjs"],
       "parser": "@babel/eslint-parser",
       "parserOptions": {
         "sourceType": "module",
