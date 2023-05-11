@@ -1,7 +1,6 @@
 ---
-import HeaderLink from '@components/Header.astro';
+import HeaderLink from '@components/HeaderLink.astro';
 import ThemeSwitcher from '@components/ThemeSwitcher.astro';
-import { SITE_TITLE } from '@/consts';
 ---
 
 <header class="mx-auto max-w-screen-lg py-6">
@@ -11,13 +10,13 @@ import { SITE_TITLE } from '@/consts';
     <h2
       class="flex items-center bg-gradient-to-br from-sky-500 to-cyan-400 bg-clip-text text-xl font-bold text-transparent"
     >
-      {SITE_TITLE}
+      Yusu.log
     </h2>
     <div class="flex items-center gap-x-3">
       <ThemeSwitcher />
       <nav class="flex gap-x-3 font-medium text-gray-200">
         <HeaderLink href="/">Home</HeaderLink>
-        <HeaderLink href="/blog">Blog</HeaderLink>
+        <HeaderLink href="/posts">Posts</HeaderLink>
         <HeaderLink href="https://github.com/Jangyusu" target="_blank">
           GitHub
         </HeaderLink>
