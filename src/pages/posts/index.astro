@@ -8,11 +8,6 @@ const postEntries = await getCollection('post');
 ---
 
 <Layout>
-  <MetaData
-    title="Woong.log"
-    description="개발 기록 공간"
-    imagePath="/assets/image/og_main_thumbnail.jpg"
-    slot="meta"
-  />
+  <MetaData title="Yusu.log" description="개발 기록 공간" slot="meta" />
   <PostList posts={postEntries} />
 </Layout>

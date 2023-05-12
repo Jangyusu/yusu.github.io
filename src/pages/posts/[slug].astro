@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@layouts/Layout.astro';
+import MetaData from '@layouts/MetaData.astro';
+
+export async function getStaticPaths() {
+  const postEntries = await getCollection('post');
+
+  return postEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { title, description, thumbnail, tags, createDate } = entry.data;
+const { Content } = await entry.render();
+---
+
+<Layout>
+  <MetaData
+    title={`${title} | Yusu.log`}
+    description={description}
+    imagePath={thumbnail}
+    slot="meta"
+  />
+  <div
+    class="flex flex-col gap-12 justify-between min-h-[13rem] p-4 border-b mb-24"
+  >
+    <h1 class="text-3xl md:text-4xl font-bold">{title}</h1>
+    <div class="flex justify-between items-center">
+      <span class="text-gray-400">
+        {createDate.toLocaleDateString('ko-KR')}
+      </span>
+    </div>
+  </div>
+  <img src={`${import.meta.env.BASE_URL}${thumbnail}`} alt="thumbnail" />
+  <div
+    class="prose prose-sm md:prose-base max-w-none mt-12 px-4 md:px-0 prose-hr:my-4 prose-h1:mb-0"
+  >
+    <Content />
+  </div>
+</Layout>

@@ -16,7 +16,7 @@ const { title, description, thumbnail, createDate } = post.data;
     <div class="grid grid-cols-12">
       <div class="max-md:h-72 col-span-12 md:col-span-3 md:row-span-2">
         <img
-          src={`${thumbnail}`}
+          src={`${import.meta.env.BASE_URL}${thumbnail}`}
           alt="thumbnail"
           class="object-cover w-full h-full"
         />
