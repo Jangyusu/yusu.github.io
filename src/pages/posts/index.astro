@@ -1,9 +1,18 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '@layouts/Layout.astro';
+import PostList from '@components/PostList.astro';
 import MetaData from '@layouts/MetaData.astro';
+
+const postEntries = await getCollection('post');
 ---
 
 <Layout>
-  <MetaData title="Yusu.log" description="개발 기록 공간" slot="meta" />
-  <h2>Posts</h2>
+  <MetaData
+    title="Woong.log"
+    description="개발 기록 공간"
+    imagePath="/assets/image/og_main_thumbnail.jpg"
+    slot="meta"
+  />
+  <PostList posts={postEntries} />
 </Layout>

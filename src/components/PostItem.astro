@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'post'>;
+}
+
+const { post } = Astro.props;
+
+const { slug } = post;
+const { title, description, thumbnail, createDate } = post.data;
+---
+
+<div class="py-4 transition-colors duration-300 hover:text-blue-400">
+  <a href={`${import.meta.env.BASE_URL}posts/${slug}`}>
+    <div class="grid grid-cols-12">
+      <div class="max-md:h-72 col-span-12 md:col-span-3 md:row-span-2">
+        <img
+          src={`${thumbnail}`}
+          alt="thumbnail"
+          class="object-cover w-full h-full"
+        />
+      </div>
+      <div class="max-md:mt-10 col-span-12 md:col-start-5 md:col-span-8">
+        <div class="flex items-end justify-between">
+          <h1 class="text-4xl md:text-2xl font-bold dark:text-white">
+            {title}
+          </h1>
+          <span class="text-sm !text-gray-600 md:pr-3">
+            {createDate.toLocaleDateString('ko-KR')}
+          </span>
+        </div>
+      </div>
+      <div class="col-span-12 md:col-start-5 md:col-span-9 py-4">
+        <p class="break-words overflow-hidden h-24 md:h-12 !text-gray-400">
+          {description}
+        </p>
+      </div>
+    </div>
+  </a>
+</div>
