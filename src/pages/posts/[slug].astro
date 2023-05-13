@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '@layouts/Layout.astro';
 import MetaData from '@layouts/MetaData.astro';
+import UtterancesScript from '@components/UtterancesScript.astro';
 
 export async function getStaticPaths() {
   const postEntries = await getCollection('post');
@@ -40,4 +41,6 @@ const { Content } = await entry.render();
   >
     <Content />
   </div>
+
+  <UtterancesScript />
 </Layout>

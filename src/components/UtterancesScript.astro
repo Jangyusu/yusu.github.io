@@ -1,0 +1,21 @@
+<script
+  src="https://utteranc.es/client.js"
+  repo="Jangyusu/yusu.log"
+  issue-term="pathname"
+  label="utterances"
+  theme="github-light"
+  crossorigin="anonymous"
+  async
+></script>
+
+<script>
+  import { setUtterancesTheme } from '@/utils/theme';
+
+  addEventListener('message', ({ origin }) => {
+    if (origin !== 'https://utteranc.es') {
+      return;
+    }
+
+    setUtterancesTheme();
+  });
+</script>

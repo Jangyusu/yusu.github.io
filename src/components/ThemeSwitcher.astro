@@ -30,18 +30,8 @@
 </button>
 
 <script>
-  import { setStorage } from '@utils/storage';
+  import { setTheme, setUtterancesTheme } from '@/utils/theme';
 
   const themeSwitcher = document.querySelector('.theme-switcher')!;
-
-  const handleClick = () => {
-    document.documentElement.classList.toggle('dark');
-    const theme = document.documentElement.classList.contains('dark')
-      ? 'dark'
-      : 'light';
-
-    setStorage('theme', theme);
-  };
-
-  themeSwitcher.addEventListener('click', handleClick);
+  setTheme(themeSwitcher);
 </script>
