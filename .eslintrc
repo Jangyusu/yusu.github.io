@@ -1,5 +1,8 @@
 {
-  "extends": ["plugin:astro/recommended"],
+  "extends": [
+    "plugin:astro/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "overrides": [
     {
       "files": ["*.astro"],
