@@ -3,14 +3,20 @@ import type { HTMLAttributes } from 'astro/types';
 
 type Props = HTMLAttributes<'a'>;
 
-const { href, ...props } = Astro.props;
+let { href, ...props } = Astro.props;
+const { BASE_URL } = import.meta.env;
+
+const isExternal = href?.toString().includes('http');
+if (!isExternal) {
+  href = BASE_URL + href;
+}
 
 const { pathname } = Astro.url;
 const isActive = href === pathname || href === pathname.replace(/\/$/, '');
 ---
 
 <a
-  href={`${import.meta.env.BASE_URL}${href}`}
+  href={href}
   class:list={[
     'transition',
     isActive
