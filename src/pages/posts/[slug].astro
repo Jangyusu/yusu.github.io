@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '@layouts/Layout.astro';
 import MetaData from '@layouts/MetaData.astro';
 import UtterancesScript from '@components/UtterancesScript.astro';
+import TagList from '@/components/TagList.astro';
 
 export async function getStaticPaths() {
   const postEntries = await getCollection('post');
@@ -30,9 +31,12 @@ const { Content } = await entry.render();
   >
     <h1 class="text-3xl md:text-4xl font-bold">{title}</h1>
     <div class="flex justify-between items-center">
-      <span class="text-gray-400">
+      <div class="min-w-0 flex-1 justify-start">
+        <TagList tags={tags} isActivate />
+      </div>
+      <div class="text-gray-400">
         {createDate.toLocaleDateString('ko-KR')}
-      </span>
+      </div>
     </div>
   </div>
   <img src={`${import.meta.env.BASE_URL}${thumbnail}`} alt="thumbnail" />

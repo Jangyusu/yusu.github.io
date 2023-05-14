@@ -1,0 +1,50 @@
+---
+import ConditionalLink from '@components/ConditionalLink.astro';
+
+interface Props {
+  name: string;
+  isSelected?: boolean;
+  isActivate?: boolean;
+}
+
+const { name, isSelected = false, isActivate = false } = Astro.props;
+---
+
+<ConditionalLink link={isActivate ? `/tags/${name}` : ''}>
+  <div
+    class:list={[
+      'flex rounded-full text-sm px-3 py-1 border-solid border-slate-400 border',
+      { 'bg-blue-100 dark:bg-blue-400': isSelected },
+      {
+        'hover:bg-slate-100 transition-colors duration-300 dark:hover:text-black':
+          !isSelected && isActivate,
+      },
+    ]}
+  >
+    <span
+      class:list={{
+        'cursor-default': !isActivate,
+      }}
+    >
+      {name}
+    </span>
+
+    {
+      isSelected && (
+        <button
+          aria-label="Close Tag"
+          class="closeBtn ml-1 -mr-2 opacity-30 hover:opacity-100"
+        >
+          X
+        </button>
+      )
+    }
+  </div>
+</ConditionalLink>
+
+<script>
+  const closeBtn = document.querySelector('.closeBtn')!;
+  closeBtn.addEventListener('click', () => {
+    location.replace('/');
+  });
+</script>

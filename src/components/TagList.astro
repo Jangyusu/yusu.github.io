@@ -1,0 +1,23 @@
+---
+import TagItem from '@components/TagItem.astro';
+
+interface Props {
+  tags: string[];
+  selectedTag?: string;
+  isActivate?: boolean;
+}
+
+const { tags, selectedTag, isActivate } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-x-2 gap-y-4">
+  {
+    tags.map((tag) => (
+      <TagItem
+        name={tag}
+        isSelected={selectedTag === tag}
+        isActivate={isActivate}
+      />
+    ))
+  }
+</div>
