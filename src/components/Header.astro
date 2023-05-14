@@ -7,15 +7,16 @@ import ThemeSwitcher from '@components/ThemeSwitcher.astro';
   <div
     class="flex flex-col gap-y-3 sm:flex-row sm:items-center sm:justify-between relative"
   >
-    <h2
-      class="flex items-center bg-gradient-to-br from-sky-500 to-cyan-400 bg-clip-text text-xl font-bold text-transparent"
-    >
-      Yusu.log
-    </h2>
-    <div class="flex items-center gap-x-3">
+    <div class="flex items-center gap-3">
+      <h2
+        class="flex items-center bg-gradient-to-br from-sky-500 to-cyan-400 bg-clip-text text-xl font-bold text-transparent"
+      >
+        Yusu.log
+      </h2>
       <ThemeSwitcher />
+    </div>
+    <div class="flex items-center gap-x-3">
       <nav class="flex gap-x-3 font-medium text-gray-200">
-        <HeaderLink href="">Home</HeaderLink>
         <HeaderLink href="posts">Posts</HeaderLink>
         <HeaderLink href="https://github.com/Jangyusu" target="_blank">
           GitHub
