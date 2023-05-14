@@ -8,5 +8,14 @@ import partytown from '@astrojs/partytown';
 export default defineConfig({
   site: 'https://jangyusu.github.io',
   base: '/yusu.log',
-  integrations: [mdx(), sitemap(), tailwind(), partytown()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    tailwind(),
+    partytown({
+      config: {
+        forward: ['dataLayer.push'],
+      },
+    }),
+  ],
 });
