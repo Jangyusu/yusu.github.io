@@ -13,12 +13,9 @@ const { name, isSelected = false, isActivate = false } = Astro.props;
 <ConditionalLink link={isActivate ? `/tags/${name}` : ''}>
   <div
     class:list={[
-      'flex rounded-full text-sm px-3 py-1 border-solid border-slate-400 border',
+      'flex rounded-full text-sm px-3 py-1 border-solid border-slate-400 border dark:hover:text-black',
       { 'bg-blue-100 dark:bg-blue-400': isSelected },
-      {
-        'hover:bg-slate-100 transition-colors duration-300 dark:hover:text-black':
-          !isSelected && isActivate,
-      },
+      { 'hover:bg-slate-100': !isSelected && isActivate },
     ]}
   >
     <span
