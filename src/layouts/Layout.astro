@@ -3,6 +3,7 @@ import '@styles/global.css';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import ThemeScript from '@layouts/ThemeScript.astro';
+import GoogleAnalyticsScript from '@layouts/GoogleAnalyticsScript.astro';
 ---
 
 <html lang="ko">
@@ -19,6 +20,7 @@ import ThemeScript from '@layouts/ThemeScript.astro';
     />
     <slot name="meta" />
     <ThemeScript />
+    <GoogleAnalyticsScript />
   </head>
   <body class="bg-white dark:bg-gray-900 text-black dark:text-white transition">
     <div>
