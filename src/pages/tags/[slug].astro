@@ -1,0 +1,40 @@
+---
+import { CollectionEntry, getCollection } from 'astro:content';
+import Layout from '@layouts/Layout.astro';
+import TagList from '@components/TagList.astro';
+import PostList from '@components/PostList.astro';
+import MetaData from '@layouts/MetaData.astro';
+
+interface Props {
+  postEntries: CollectionEntry<'post'>[];
+}
+
+export async function getStaticPaths() {
+  const postEntries = await getCollection('post');
+
+  return postEntries
+    .flatMap(({ data }) => data.tags)
+    .map((tag) => ({
+      params: { slug: tag },
+      props: { postEntries },
+    }));
+}
+
+const { postEntries } = Astro.props;
+const { slug } = Astro.params;
+const allTags = [...new Set(postEntries.flatMap((entry) => entry.data.tags))];
+const filterPosts = postEntries.filter((entry) =>
+  entry.data.tags.includes(`${slug}`)
+);
+---
+
+<Layout>
+  <MetaData
+    title={`${slug} | Woong.log`}
+    description={`${slug} Posts`}
+    imagePath="/assets/image/og_main_thumbnail.jpg"
+    slot="meta"
+  />
+  <TagList tags={allTags} selectedTag={slug} isActivate />
+  <PostList posts={filterPosts} />
+</Layout>

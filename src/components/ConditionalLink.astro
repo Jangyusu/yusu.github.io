@@ -3,7 +3,13 @@ interface Props {
   link: string;
 }
 
-const { link } = Astro.props;
+let { link } = Astro.props;
+const { BASE_URL } = import.meta.env;
+
+const isExternal = link?.toString().includes('http');
+if (!isExternal) {
+  link = BASE_URL + link;
+}
 ---
 
 <>

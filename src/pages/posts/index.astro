@@ -3,11 +3,14 @@ import { getCollection } from 'astro:content';
 import Layout from '@layouts/Layout.astro';
 import PostList from '@components/PostList.astro';
 import MetaData from '@layouts/MetaData.astro';
+import TagList from '@/components/TagList.astro';
 
 const postEntries = await getCollection('post');
+const allTags = [...new Set(postEntries.flatMap((post) => post.data.tags))];
 ---
 
 <Layout>
   <MetaData title="Yusu.log" description="개발 기록 공간" slot="meta" />
+  <TagList tags={allTags} isActivate />
   <PostList posts={postEntries} />
 </Layout>
