@@ -7,14 +7,11 @@ import TagList from '@/components/TagList.astro';
 
 export async function getStaticPaths() {
   const postEntries = await getCollection('post');
+  const postEntriesLength = postEntries.length;
 
-  return postEntries.map((entry) => {
-    const nextEntry = postEntries.find(
-      (post) => post.data.createDate > entry.data.createDate
-    );
-    const prevEntry = postEntries
-      .reverse()
-      .find((post) => post.data.createDate < entry.data.createDate);
+  return postEntries.map((entry, i) => {
+    const prevEntry = i === 0 ? null : postEntries[i - 1];
+    const nextEntry = i + 1 === postEntriesLength ? null : postEntries[i + 1];
 
     return {
       params: { slug: entry.slug },
