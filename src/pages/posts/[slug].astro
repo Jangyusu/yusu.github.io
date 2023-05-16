@@ -9,15 +9,17 @@ export async function getStaticPaths() {
   const postEntries = await getCollection('post');
   const postEntriesLength = postEntries.length;
 
-  return postEntries.map((entry, i) => {
-    const prevEntry = i === 0 ? null : postEntries[i - 1];
-    const nextEntry = i + 1 === postEntriesLength ? null : postEntries[i + 1];
+  return postEntries
+    .sort((a, b) => b.data.createDate.getTime() - a.data.createDate.getTime())
+    .map((entry, i) => {
+      const prevEntry = i + 1 === postEntriesLength ? null : postEntries[i + 1];
+      const nextEntry = i === 0 ? null : postEntries[i - 1];
 
-    return {
-      params: { slug: entry.slug },
-      props: { entry, prevEntry, nextEntry },
-    };
-  });
+      return {
+        params: { slug: entry.slug },
+        props: { entry, prevEntry, nextEntry },
+      };
+    });
 }
 
 const { entry, prevEntry, nextEntry } = Astro.props;
