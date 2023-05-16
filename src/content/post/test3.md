@@ -1,7 +1,7 @@
 ---
-id: 1
-title: 타이틀
-description: 설명
+id: 3
+title: 타이틀 3
+description: 설명 3
 thumbnail: yusu.log/assets/image/Test/placeholder-about.jpg
 tags:
   [
@@ -21,7 +21,7 @@ tags:
     'tag14',
     'tag15',
   ]
-createDate: 2023-05-11
+createDate: 2023-05-13
 ---
 
-내용
+내용 3

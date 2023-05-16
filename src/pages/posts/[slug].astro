@@ -8,13 +8,23 @@ import TagList from '@/components/TagList.astro';
 export async function getStaticPaths() {
   const postEntries = await getCollection('post');
 
-  return postEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  return postEntries.map((entry) => {
+    const nextEntry = postEntries.find(
+      (post) => post.data.createDate > entry.data.createDate
+    );
+    const prevEntry = postEntries
+      .reverse()
+      .find((post) => post.data.createDate < entry.data.createDate);
+
+    return {
+      params: { slug: entry.slug },
+      props: { entry, prevEntry, nextEntry },
+    };
+  });
 }
 
-const { entry } = Astro.props;
+const { entry, prevEntry, nextEntry } = Astro.props;
+
 const { title, description, thumbnail, tags, createDate } = entry.data;
 const { Content } = await entry.render();
 ---
@@ -43,10 +53,58 @@ const { Content } = await entry.render();
   </div>
   <img src={`${import.meta.env.BASE_URL}${thumbnail}`} alt="thumbnail" />
   <div
-    class="prose prose-sm md:prose-base max-w-none mt-12 px-4 md:px-0 prose-hr:my-4 prose-h1:mb-0"
+    class="prose prose-sm md:prose-base max-w-none mt-12 prose-hr:my-4 prose-h1:mb-0"
   >
     <Content />
   </div>
+
+  {
+    (prevEntry || nextEntry) && (
+      <div class="pt-12 pb-8 flex flex-col-reverse md:flex-row justify-between items-stretch gap-6">
+        {prevEntry && (
+          <a
+            href={`${import.meta.env.BASE_URL}posts/${prevEntry?.slug}`}
+            class="w-full"
+          >
+            <button class="w-full h-full py-3 px-4 bg-slate-100 dark:bg-slate-800 flex justify-start items-center gap-3 transition">
+              <span class="material-symbols-rounded text-4xl text-sky-400">
+                arrow_circle_left
+              </span>
+              <div class="flex flex-col items-start gap-0.5">
+                <p class="text-xs text-slate-700 dark:text-slate-300 transition">
+                  이전 포스트
+                </p>
+                <p class="text-slate-900 dark:text-slate-100 text-left break-keep transition">
+                  {prevEntry?.data.title}
+                </p>
+              </div>
+            </button>
+          </a>
+        )}
+
+        {nextEntry && (
+          <a
+            href={`${import.meta.env.BASE_URL}posts/${nextEntry?.slug}`}
+            class="w-full"
+          >
+            <button class="w-full h-full p-4 bg-slate-100 dark:bg-slate-800 flex justify-end items-center gap-3 transition">
+              <div class="flex flex-col items-end gap-0.5">
+                <p class="text-xs text-slate-700 dark:text-slate-300 transition">
+                  다음 포스트
+                </p>
+                <p class="text-slate-900 dark:text-slate-100 text-right break-keep transition">
+                  {nextEntry?.data.title}
+                </p>
+              </div>
+              <span class="material-symbols-rounded text-4xl text-sky-400 transition">
+                arrow_circle_right
+              </span>
+            </button>
+          </a>
+        )}
+      </div>
+    )
+  }
 
   <UtterancesScript />
 </Layout>
