@@ -5,12 +5,13 @@ interface Props {
   tags: string[];
   selectedTag?: string;
   isActivate?: boolean;
+  class?: string;
 }
 
-const { tags, selectedTag, isActivate } = Astro.props;
+const { tags, selectedTag, isActivate, class: className } = Astro.props;
 ---
 
-<div class="flex flex-wrap justify-center gap-x-2 gap-y-4">
+<div class:list={['flex flex-wrap gap-x-2 gap-y-4', className]}>
   {
     tags.map((tag) => (
       <TagItem
