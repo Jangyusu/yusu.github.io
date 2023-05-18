@@ -15,3 +15,6 @@ pnpm-debug.log*
 
 # visual studio code
 .vscode/
+
+# public
+public/
