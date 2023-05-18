@@ -1,6 +1,6 @@
 import { getStorage, setStorage } from '@utils/storage';
 
-export const setTheme = (themeSwitch: Element) => {
+export const setTheme = (themeSwitch: HTMLButtonElement) => {
   themeSwitch.addEventListener('click', () => {
     document.documentElement.classList.toggle('dark');
     const theme = document.documentElement.classList.contains('dark')
@@ -8,7 +8,7 @@ export const setTheme = (themeSwitch: Element) => {
       : 'light';
 
     setStorage('theme', theme);
-    setUtterancesTheme();
+    setGiscusTheme();
   });
 };
 
@@ -24,21 +24,28 @@ export const getTheme = () => {
     : 'light';
 };
 
-export const setUtterancesTheme = () => {
-  const utterancesFrame = document.querySelector(
-    '.utterances-frame'
-  ) as HTMLIFrameElement;
+export const setGiscusTheme = () => {
+  const theme = getTheme();
 
-  if (!utterancesFrame) {
-    return;
+  function sendMessage(message: {
+    setConfig: {
+      theme: string;
+    };
+  }) {
+    const iframe = document.querySelector(
+      'iframe.giscus-frame'
+    ) as HTMLIFrameElement;
+    if (!iframe) return;
+    iframe.contentWindow &&
+      iframe.contentWindow.postMessage(
+        { giscus: message },
+        'https://giscus.app'
+      );
   }
 
-  const theme = getTheme();
-  const message = {
-    type: 'set-theme',
-    theme: `github-${theme}`,
-  };
-
-  utterancesFrame.contentWindow &&
-    utterancesFrame.contentWindow.postMessage(message, 'https://utteranc.es');
+  sendMessage({
+    setConfig: {
+      theme,
+    },
+  });
 };

@@ -7,15 +7,3 @@
   crossorigin="anonymous"
   async
 ></script>
-
-<script>
-  import { setUtterancesTheme } from '@/utils/theme';
-
-  addEventListener('message', ({ origin }) => {
-    if (origin !== 'https://utteranc.es') {
-      return;
-    }
-
-    setUtterancesTheme();
-  });
-</script>

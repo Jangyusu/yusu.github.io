@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import Layout from '@layouts/Layout.astro';
 import MetaData from '@layouts/MetaData.astro';
-import UtterancesScript from '@layouts/UtterancesScript.astro';
 import TagList from '@/components/TagList.astro';
+import GiscusScript from '@/layouts/GiscusScript.astro';
 
 export async function getStaticPaths() {
   const postEntries = await getCollection('post');
@@ -104,6 +104,5 @@ const { Content } = await entry.render();
       </div>
     )
   }
-
-  <UtterancesScript />
+  <GiscusScript />
 </Layout>

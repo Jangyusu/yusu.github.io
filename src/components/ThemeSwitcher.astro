@@ -30,8 +30,10 @@
 </button>
 
 <script>
-  import { setTheme, setUtterancesTheme } from '@/utils/theme';
+  import { setTheme } from '@/utils/theme';
 
-  const themeSwitcher = document.querySelector('.theme-switcher')!;
+  const themeSwitcher = document.querySelector(
+    '.theme-switcher'
+  ) as HTMLButtonElement;
   setTheme(themeSwitcher);
 </script>
