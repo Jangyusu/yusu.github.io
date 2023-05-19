@@ -1,11 +1,16 @@
 ---
 import '@styles/global.css';
-import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import ThemeScript from '@layouts/ThemeScript.astro';
 import GoogleAnalyticsScript from '@layouts/GoogleAnalyticsScript.astro';
 import GoogleSearchConsole from './GoogleSearchConsole.astro';
 import FaviconData from './FaviconData.astro';
+
+interface Props {
+  wideScreen?: boolean;
+}
+
+const { wideScreen = false } = Astro.props;
 ---
 
 <html lang="ko">
@@ -24,19 +29,28 @@ import FaviconData from './FaviconData.astro';
     <GoogleSearchConsole />
     <slot name="meta" />
   </head>
-  <body class="bg-white dark:bg-gray-900 text-black dark:text-white transition">
+  <body class="bg-white dark:bg-gray-900">
     <div>
       <div
-        class="sticky top-0 border-b border-slate-100 mb-12 bg-white dark:bg-gray-900 transition"
+        class="sticky top-0 border-b border-gray-100 mb-12 bg-white dark:bg-gray-900"
       >
-        <div class="container mx-auto max-w-screen-md">
+        <div
+          class:list={[
+            'container mx-auto',
+            wideScreen ? 'max-w-screen-xl' : 'max-w-screen-sm',
+          ]}
+        >
           <Header />
         </div>
       </div>
-      <div class="container mx-auto max-w-screen-md px-4">
+      <div
+        class:list={[
+          'container mx-auto px-8',
+          wideScreen ? 'max-w-screen-xl' : 'max-w-screen-sm',
+        ]}
+      >
         <slot />
       </div>
-      <Footer />
     </div>
   </body>
 </html>

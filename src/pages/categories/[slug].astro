@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import PostList from '@/components/PostList.astro';
+import CategoryList from '@/components/CategoryList.astro';
+import Footer from '@/components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('post');
+
+  return posts.map((entry) => ({
+    params: { slug: entry.data.category },
+    props: {
+      posts: posts.filter((post) => post.data.category === entry.data.category),
+      categories: [...new Set(posts.flatMap((post) => post.data.category))],
+      selectedCategory: entry.data.category,
+    },
+  }));
+}
+
+const { posts, categories, selectedCategory } = Astro.props;
+---
+
+<Layout wideScreen>
+  <div class="flex flex-col md:flex-row gap-10">
+    <div class="min-w-0 flex-1">
+      <PostList posts={posts} />
+    </div>
+    <div class="w-full md:w-[13rem]">
+      <CategoryList
+        categories={categories}
+        selectedCategory={selectedCategory}
+      />
+      <Footer />
+    </div>
+  </div>
+</Layout>

@@ -4,9 +4,7 @@ const postCollection = defineCollection({
   schema: z.object({
     id: z.number(),
     title: z.string(),
-    description: z.string(),
-    thumbnail: z.string().optional(),
-    tags: z.array(z.string()),
+    category: z.string(),
     createDate: z.date(),
   }),
 });

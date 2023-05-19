@@ -8,34 +8,38 @@ interface Props {
 const { post } = Astro.props;
 
 const { slug } = post;
-const { title, description, thumbnail, createDate } = post.data;
+const {
+  body,
+  data: { title, category, createDate },
+} = post;
+
+const description = body.slice(0, 100);
+const formatDate = `${createDate.getFullYear()}년 ${String(
+  createDate.getMonth() + 1
+).padStart(2, '0')}월 ${String(createDate.getDate()).padStart(2, '0')}일`;
 ---
 
-<div class="py-4 hover:text-blue-400">
-  <a href={`${import.meta.env.BASE_URL}posts/${slug}`}>
-    <div class="grid grid-cols-12">
-      <div class="max-md:h-72 col-span-12 md:col-span-3 md:row-span-2">
-        <img
-          src={`${import.meta.env.BASE_URL}${thumbnail}`}
-          alt="thumbnail"
-          class="object-cover w-full h-full"
-        />
-      </div>
-      <div class="max-md:mt-10 col-span-12 md:col-start-5 md:col-span-8">
-        <div class="flex items-end justify-between">
-          <h1 class="text-4xl md:text-2xl font-bold dark:text-white transition">
-            {title}
-          </h1>
-          <span class="text-sm !text-gray-600 md:pr-3">
-            {createDate.toLocaleDateString('ko-KR')}
-          </span>
-        </div>
-      </div>
-      <div class="col-span-12 md:col-start-5 md:col-span-9 py-4">
-        <p class="break-words overflow-hidden h-24 md:h-12 !text-gray-400">
-          {description}
-        </p>
-      </div>
-    </div>
+<li>
+  <a href={`${import.meta.env.BASE_URL}posts/${slug}`} class="flex flex-col">
+    <span
+      class:list={[
+        'w-max rounded-full px-2.5 py-1 uppercase text-xs text-gray-100 font-bold',
+        {
+          'bg-purple-600': category === 'tech',
+          'bg-green-600': category === 'life',
+        },
+      ]}
+    >
+      {category}
+    </span>
+    <h1 class="mt-2 text-xl font-bold leading-7">
+      {title}
+    </h1>
+    <p class="mt-3 text-gray-500 dark:text-gray-400 line-clamp-3">
+      {description}
+    </p>
+    <span class="mt-3 text-sm text-gray-700">
+      {formatDate}
+    </span>
   </a>
-</div>
+</li>

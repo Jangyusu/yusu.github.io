@@ -1,0 +1,25 @@
+---
+import CategoryItem from './CategoryItem.astro';
+
+interface Props {
+  categories: string[];
+  selectedCategory: string;
+}
+
+const { categories, selectedCategory } = Astro.props;
+---
+
+<div>
+  <p class="text-sm text-gray-700 dark:text-gray-300 font-bold">카테고리</p>
+  <ul class="mt-4">
+    <CategoryItem category="all" isSelected={selectedCategory === 'all'} />
+    {
+      categories.map((category) => (
+        <CategoryItem
+          category={category}
+          isSelected={selectedCategory === category}
+        />
+      ))
+    }
+  </ul>
+</div>

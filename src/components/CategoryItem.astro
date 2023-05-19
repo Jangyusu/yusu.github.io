@@ -1,0 +1,39 @@
+---
+interface Props {
+  category: string;
+  isSelected: boolean;
+}
+
+const { category, isSelected } = Astro.props;
+const { BASE_URL } = import.meta.env;
+
+const categoryName = (category: string) => {
+  switch (category) {
+    case 'all':
+      return '전체';
+    case 'tech':
+      return '기술';
+    case 'life':
+      return '일상';
+    default:
+      return category;
+  }
+};
+
+const href =
+  category === 'all' ? BASE_URL : `${BASE_URL}categories/${category}`;
+---
+
+<li>
+  <a
+    href={href}
+    class:list={[
+      'pl-4 border-l-2 block leading-9 text-gray-300 dark:text-gray-700',
+      [
+        isSelected
+          ? 'border-gray-700 dark:border-gray-300 !text-gray-700 dark:!text-gray-300 font-bold'
+          : 'border-gray-200 dark:border-gray-800 hover:text-gray-700 dark:hover:text-gray-300',
+      ],
+    ]}>{categoryName(category)}</a
+  >
+</li>
