@@ -29,15 +29,13 @@ const { wideScreen = false } = Astro.props;
     <GoogleSearchConsole />
     <slot name="meta" />
   </head>
-  <body class="bg-white dark:bg-gray-900">
+  <body class="pb-10 bg-white dark:bg-gray-900">
     <div>
-      <div
-        class="sticky top-0 border-b border-gray-100 mb-12 bg-white dark:bg-gray-900"
-      >
+      <div class="mb-8 bg-white dark:bg-gray-900">
         <div
           class:list={[
             'container mx-auto',
-            wideScreen ? 'max-w-screen-xl' : 'max-w-screen-sm',
+            wideScreen ? 'w-screen-xl' : 'max-w-screen-sm',
           ]}
         >
           <Header />
@@ -46,7 +44,7 @@ const { wideScreen = false } = Astro.props;
       <div
         class:list={[
           'container mx-auto px-8',
-          wideScreen ? 'max-w-screen-xl' : 'max-w-screen-sm',
+          wideScreen ? 'w-screen-xl' : 'max-w-screen-sm',
         ]}
       >
         <slot />
