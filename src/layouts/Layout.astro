@@ -10,14 +10,30 @@ interface Props {
   wideScreen?: boolean;
 }
 
-const { wideScreen = false } = Astro.props;
+const {
+  generator,
+  props: { wideScreen = false },
+} = Astro;
+const { SITE_TITLE, SITE_DESCRIPTION } = import.meta.env;
 ---
 
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
+    <meta name="generator" content={generator} />
+    <meta name="theme-color" content="#60a5fa" />
+    <title>{SITE_TITLE}</title>
+    <meta name="title" content={SITE_TITLE} />
+    <meta name="description" content={SITE_DESCRIPTION} />
+    <meta property="og:title" content={SITE_TITLE} />
+    <meta property="og:description" content={SITE_DESCRIPTION} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="twitter:title" content={SITE_TITLE} />
+    <meta property="twitter:description" content={SITE_DESCRIPTION} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link
       rel="stylesheet"
@@ -27,7 +43,6 @@ const { wideScreen = false } = Astro.props;
     <ThemeScript />
     <GoogleAnalyticsScript />
     <GoogleSearchConsole />
-    <slot name="meta" />
   </head>
   <body class="pb-10 bg-white dark:bg-gray-900">
     <div>

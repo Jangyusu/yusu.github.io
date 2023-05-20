@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@layouts/Layout.astro';
-import MetaData from '@layouts/MetaData.astro';
 import GiscusScript from '@/layouts/GiscusScript.astro';
 
 export async function getStaticPaths() {
@@ -28,11 +27,6 @@ const { Content } = await entry.render();
 ---
 
 <Layout>
-  <MetaData
-    title={`${title} | Yusu.log`}
-    description={description}
-    slot="meta"
-  />
   <div
     class="flex flex-col gap-12 justify-between min-h-[13rem] p-4 border-b mb-24"
   >
@@ -59,15 +53,15 @@ const { Content } = await entry.render();
             href={`${import.meta.env.BASE_URL}posts/${prevEntry?.slug}`}
             class="w-full"
           >
-            <button class="w-full h-full py-3 px-4 bg-slate-100 dark:bg-slate-800 flex justify-start items-center gap-3 transition">
+            <button class="w-full h-full p-4 bg-gray-100 dark:bg-gray-800 flex justify-start items-center gap-3 transition">
               <span class="material-symbols-rounded text-4xl text-sky-400">
                 arrow_circle_left
               </span>
               <div class="flex flex-col items-start gap-0.5">
-                <p class="text-xs text-slate-700 dark:text-slate-300 transition">
+                <p class="text-xs text-gray-700 dark:text-gray-300 transition">
                   이전 포스트
                 </p>
-                <p class="text-slate-900 dark:text-slate-100 text-left break-keep transition">
+                <p class="text-gray-900 dark:text-gray-100 text-left break-keep transition">
                   {prevEntry?.data.title}
                 </p>
               </div>
@@ -80,12 +74,12 @@ const { Content } = await entry.render();
             href={`${import.meta.env.BASE_URL}posts/${nextEntry?.slug}`}
             class="w-full"
           >
-            <button class="w-full h-full p-4 bg-slate-100 dark:bg-slate-800 flex justify-end items-center gap-3 transition">
+            <button class="w-full h-full p-4 bg-gray-100 dark:bg-gray-800 flex justify-end items-center gap-3 transition">
               <div class="flex flex-col items-end gap-0.5">
-                <p class="text-xs text-slate-700 dark:text-slate-300 transition">
+                <p class="text-xs text-gray-700 dark:text-gray-300 transition">
                   다음 포스트
                 </p>
-                <p class="text-slate-900 dark:text-slate-100 text-right break-keep transition">
+                <p class="text-gray-900 dark:text-gray-100 text-right break-keep transition">
                   {nextEntry?.data.title}
                 </p>
               </div>

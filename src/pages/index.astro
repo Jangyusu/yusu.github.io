@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import CategoryList from '@/components/CategoryList.astro';
 import PostList from '@/components/PostList.astro';
 import Layout from '@layouts/Layout.astro';
-import MetaData from '@layouts/MetaData.astro';
 import Footer from '@/components/Footer.astro';
 
 const postEntries = await getCollection('post');
@@ -19,7 +18,6 @@ const allCategories = [
 ---
 
 <Layout wideScreen>
-  <MetaData title="Yusu.log" description="개발 기록 공간" slot="meta" />
   <div class="flex flex-col md:flex-row gap-10">
     <div class="min-w-0 flex-1">
       <PostList posts={postEntriesByCategory} />
