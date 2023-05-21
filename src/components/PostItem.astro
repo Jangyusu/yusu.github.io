@@ -23,7 +23,7 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
   <a href={`${import.meta.env.BASE_URL}posts/${slug}`} class="flex flex-col">
     <span
       class:list={[
-        'w-max rounded-full px-2.5 py-1 uppercase text-xs text-gray-100 font-bold',
+        'w-max rounded-full px-2.5 uppercase text-xs text-gray-100 font-bold leading-6',
         {
           'bg-purple-600': category === 'tech',
           'bg-green-600': category === 'life',
