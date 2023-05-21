@@ -22,12 +22,12 @@ const allCategories = [
     <div class="min-w-0 flex-1">
       <PostList posts={postEntriesByCategory} />
     </div>
-    <div class="w-full h-max md:w-[13rem] md:sticky md:top-10">
+    <div class="w-full h-max md:w-[12rem] md:sticky md:top-10">
       <CategoryList
         categories={allCategories}
         selectedCategory={selectedCategory}
       />
-      <Footer />
+      <Footer wideScreen />
     </div>
   </div>
 </Layout>

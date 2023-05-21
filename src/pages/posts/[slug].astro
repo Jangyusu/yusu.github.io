@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '@layouts/Layout.astro';
 import GiscusScript from '@/layouts/GiscusScript.astro';
+import Layout from '@layouts/Layout.astro';
+import Footer from '@/components/Footer.astro';
 
 export async function getStaticPaths() {
   const postEntries = await getCollection('post');
@@ -22,26 +23,24 @@ export async function getStaticPaths() {
 
 const { entry, prevEntry, nextEntry } = Astro.props;
 
-const { title, description, createDate } = entry.data;
+const { title, createDate } = entry.data;
 const { Content } = await entry.render();
+
+const formatDate = `${createDate.getFullYear()}년 ${String(
+  createDate.getMonth() + 1
+).padStart(2, '0')}월 ${String(createDate.getDate()).padStart(2, '0')}일`;
 ---
 
 <Layout>
-  <div
-    class="flex flex-col gap-12 justify-between min-h-[13rem] p-4 border-b mb-24"
-  >
-    <h1 class="text-3xl md:text-4xl font-bold dark:text-white transition">
+  <div class="my-10 flex flex-col items-center justify-between">
+    <div class="flex justify-between items-center text-sm text-gray-500">
+      {formatDate}
+    </div>
+    <h1 class="mt-4 text-3xl md:text-4xl font-bold text-center">
       {title}
     </h1>
-    <div class="flex justify-between items-center">
-      <div class="text-gray-400">
-        {createDate.toLocaleDateString('ko-KR')}
-      </div>
-    </div>
   </div>
-  <div
-    class="prose prose-sm md:prose-base max-w-none mt-12 prose-hr:my-4 prose-h1:mb-0"
-  >
+  <div class="text-lg">
     <Content />
   </div>
 
@@ -93,4 +92,5 @@ const { Content } = await entry.render();
     )
   }
   <GiscusScript />
+  <Footer />
 </Layout>

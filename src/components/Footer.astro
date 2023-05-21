@@ -1,7 +1,18 @@
 ---
 const today = new Date();
+
+interface Props {
+  wideScreen: boolean;
+}
+
+const { wideScreen } = Astro.props;
 ---
 
-<footer class="py-6 text-xs text-gray-400 dark:text-gray-600">
+<footer
+  class:list={[
+    'py-6 text-xs text-gray-400 dark:text-gray-600',
+    wideScreen ? 'text-left' : 'text-center',
+  ]}
+>
   &copy; {today.getFullYear()} YusuJang. All rights reserved.
 </footer>
