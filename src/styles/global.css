@@ -1,6 +1,4 @@
-@import './font.css';
-
 *,
 a {
-  @apply font-['Pretendard-Regular'] text-gray-900 dark:text-gray-100 transition;
+  @apply text-gray-900 dark:text-gray-100 transition;
 }
