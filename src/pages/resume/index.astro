@@ -2,4 +2,64 @@
 import Layout from '@/layouts/Layout.astro';
 ---
 
-<Layout>RESUME</Layout>
+<Layout>
+  <header>
+    <h1 class="text-2xl md:text-3xl font-bold">개발자 장유수</h1>
+    <p class="mt-4 text-sm text-gray-500 dark:text-gray-500">
+      2022년 5월 24일에 마지막으로 업데이트 됨.
+    </p>
+  </header>
+  <main class="mt-16">
+    <section>
+      <div class="mb-10">
+        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+          프로필
+        </h2>
+      </div>
+      <div class="md:flex">
+        <img
+          src="https://github.com/Jangyusu/yusu.log/assets/60203731/be3e016f-f7f2-443c-81fb-47a78226a91c"
+          alt="profile"
+          class="w-24 h-24 rounded-3xl object-cover"
+        />
+        <div class="space-y-6 mt-6 md:mt-0 md:ml-10">
+          <dl class="flex">
+            <dt class="flex flex-col uppercase font-semibold w-28">
+              <span class="text-xs text-gray-400 dark:text-gray-600">Name</span>
+              <span class="text-lg text-gray-700 dark:text-gray-300">이름</span>
+            </dt>
+            <dd class="flex-1 text-lg">장유수</dd>
+          </dl>
+          <dl class="flex">
+            <dt class="flex flex-col uppercase font-semibold w-28">
+              <span class="text-xs text-gray-400 dark:text-gray-600"
+                >Birthday</span
+              >
+              <span class="text-lg text-gray-700 dark:text-gray-300"
+                >생년월일</span
+              >
+            </dt>
+            <dd class="flex-1 text-lg">1995년 8월 28일</dd>
+          </dl>
+          <dl class="flex">
+            <dt class="flex flex-col uppercase font-semibold w-28">
+              <span class="text-xs text-gray-400 dark:text-gray-600">Email</span
+              >
+              <span class="text-lg text-gray-700 dark:text-gray-300"
+                >이메일</span
+              >
+            </dt>
+            <dd class="flex-1 text-lg">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="mailto:dbtnss@naver.com"
+                class="hover:underline break-all">dbtnss@naver.com</a
+              >
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
