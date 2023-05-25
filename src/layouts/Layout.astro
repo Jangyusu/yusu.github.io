@@ -8,13 +8,19 @@ import FaviconData from './FaviconData.astro';
 
 interface Props {
   wideScreen?: boolean;
+  title?: string;
+  description?: string;
 }
 
+const { SITE_TITLE, SITE_DESCRIPTION } = import.meta.env;
 const {
   generator,
-  props: { wideScreen = false },
+  props: {
+    wideScreen = false,
+    title = SITE_TITLE,
+    description = SITE_DESCRIPTION,
+  },
 } = Astro;
-const { SITE_TITLE, SITE_DESCRIPTION } = import.meta.env;
 ---
 
 <html lang="ko">
@@ -23,15 +29,15 @@ const { SITE_TITLE, SITE_DESCRIPTION } = import.meta.env;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={generator} />
     <meta name="theme-color" content="#60a5fa" />
-    <title>{SITE_TITLE}</title>
-    <meta name="title" content={SITE_TITLE} />
-    <meta name="description" content={SITE_DESCRIPTION} />
-    <meta property="og:title" content={SITE_TITLE} />
-    <meta property="og:description" content={SITE_DESCRIPTION} />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
-    <meta property="twitter:title" content={SITE_TITLE} />
-    <meta property="twitter:description" content={SITE_DESCRIPTION} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <link rel="sitemap" href="/sitemap-index.xml" />
