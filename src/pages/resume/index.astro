@@ -14,9 +14,9 @@ import Layout from '@/layouts/Layout.astro';
   </header>
   <main class="mt-16 space-y-28">
     <section>
-      <div class="mb-10">
+      <div class="mb-10 relative">
         <h3
-          class="text-sm font-medium text-gray-400 dark:text-gray-600 uppercase"
+          class="text-sm font-medium text-gray-400 dark:text-gray-600 uppercase absolute bottom-full"
         >
           Profile
         </h3>
@@ -76,9 +76,37 @@ import Layout from '@/layouts/Layout.astro';
       </div>
     </section>
     <section>
-      <div class="mb-10">
+      <div class="flex">
+        <div class="w-28 relative">
+          <h3
+            class="text-sm font-medium text-gray-400 dark:text-gray-600 uppercase absolute bottom-full"
+          >
+            Introduce
+          </h3>
+          <h2 class="text-2xl text-gray-800 dark:text-gray-200 font-semibold">
+            소개
+          </h2>
+        </div>
+        <div class="flex-1 space-y-10">
+          <ul class="list-disc pl-10 space-y-3">
+            <li>안녕하세요! 3년 차 프론트엔드 개발자 장유수입니다.</li>
+            <li>
+              현재 개발자로서의 성장을 기록하기 위해 개인 기술 블로그를 운영하고
+              있습니다.
+            </li>
+            <li>
+              무엇보다 새로운 기술을 배우는 것을 좋아하며, 더 나은 개발자가 되기
+              위해 끊임없이 공부하고 있습니다.
+            </li>
+            <li>콘솔 게임을 즐겨하며, 영화와 드라마를 보는 것을 좋아합니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="mb-12 relative">
         <h3
-          class="text-sm font-medium text-gray-400 dark:text-gray-600 uppercase"
+          class="text-sm font-medium text-gray-400 dark:text-gray-600 uppercase absolute bottom-full"
         >
           Skills
         </h3>
@@ -96,7 +124,7 @@ import Layout from '@/layouts/Layout.astro';
             <span class="text-gray-700 dark:text-gray-300">프론트엔드</span>
           </dt>
           <dd class="flex-1">
-            <ul class="list-disc pl-10 space-y-2">
+            <ul class="list-disc pl-10 space-y-3">
               <li>React.js (Next.js)</li>
               <li>Vue.js</li>
               <li>Typescript</li>
