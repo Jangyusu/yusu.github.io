@@ -13,14 +13,13 @@ interface Props {
 }
 
 const { SITE_TITLE, SITE_DESCRIPTION } = import.meta.env;
-const {
+let {
   generator,
-  props: {
-    wideScreen = false,
-    title = SITE_TITLE,
-    description = SITE_DESCRIPTION,
-  },
+  props: { wideScreen = false, title, description },
 } = Astro;
+
+title = title || SITE_TITLE;
+description = description || SITE_DESCRIPTION;
 ---
 
 <html lang="ko">
