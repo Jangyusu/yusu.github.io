@@ -1,8 +1,0 @@
----
-id: 3
-title: 타이틀
-category: 'life'
-createDate: 2023-05-13
----
-
-내용
