@@ -33,10 +33,12 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
 
 <Layout>
   <div class="my-10 flex flex-col items-center justify-between">
-    <div class="flex justify-between items-center text-sm text-gray-500">
+    <time>
       {formatDate}
-    </div>
-    <h1 class="mt-4 text-3xl md:text-4xl font-bold text-center">
+    </time>
+    <h1
+      class="mt-4 max-w-[18rem] text-center text-2xl font-extrabold tracking-tight md:max-w-full md:text-3xl"
+    >
       {title}
     </h1>
   </div>
@@ -54,15 +56,15 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
             href={`${import.meta.env.BASE_URL}posts/${prevEntry?.slug}`}
             class="w-full"
           >
-            <button class="w-full h-full p-4 bg-gray-100 dark:bg-gray-800 flex justify-start items-center gap-3 transition">
+            <button class="w-full h-full p-4 bg-gray-100 dark:bg-gray-800 flex justify-start items-center gap-3">
               <span class="material-symbols-rounded text-4xl text-sky-400">
                 arrow_circle_left
               </span>
               <div class="flex flex-col items-start gap-0.5">
-                <p class="text-xs text-gray-700 dark:text-gray-300 transition">
+                <p class="text-xs text-gray-700 dark:text-gray-300">
                   이전 포스트
                 </p>
-                <p class="text-gray-900 dark:text-gray-100 text-left break-keep transition">
+                <p class="text-gray-900 dark:text-gray-100 text-left">
                   {prevEntry?.data.title}
                 </p>
               </div>
@@ -75,16 +77,16 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
             href={`${import.meta.env.BASE_URL}posts/${nextEntry?.slug}`}
             class="w-full"
           >
-            <button class="w-full h-full p-4 bg-gray-100 dark:bg-gray-800 flex justify-end items-center gap-3 transition">
+            <button class="w-full h-full p-4 bg-gray-100 dark:bg-gray-800 flex justify-end items-center gap-3">
               <div class="flex flex-col items-end gap-0.5">
-                <p class="text-xs text-gray-700 dark:text-gray-300 transition">
+                <p class="text-xs text-gray-700 dark:text-gray-300">
                   다음 포스트
                 </p>
-                <p class="text-gray-900 dark:text-gray-100 text-right break-keep transition">
+                <p class="text-gray-900 dark:text-gray-100 text-right">
                   {nextEntry?.data.title}
                 </p>
               </div>
-              <span class="material-symbols-rounded text-4xl text-sky-400 transition">
+              <span class="material-symbols-rounded text-4xl text-sky-400">
                 arrow_circle_right
               </span>
             </button>
@@ -93,6 +95,6 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
       </div>
     )
   }
-  <GiscusScript />
+  <GiscusScript class="mt-10" />
   <Footer />
 </Layout>
