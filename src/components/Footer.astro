@@ -2,10 +2,10 @@
 const today = new Date();
 
 interface Props {
-  wideScreen: boolean;
+  wideScreen?: boolean;
 }
 
-const { wideScreen } = Astro.props;
+const { wideScreen = false } = Astro.props;
 ---
 
 <footer
