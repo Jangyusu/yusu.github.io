@@ -1,4 +1,12 @@
-<div class="giscus-wrapper"></div>
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['giscus-wrapper', className]}></div>
 
 <script>
   import { getTheme } from '@utils/theme';
