@@ -6,8 +6,7 @@ import partytown from '@astrojs/partytown';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://jangyusu.github.io',
-  base: '/yusu.log',
+  site: 'https://yusu.blog',
   integrations: [
     mdx(),
     sitemap(),
