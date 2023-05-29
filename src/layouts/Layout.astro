@@ -12,14 +12,17 @@ interface Props {
   description?: string;
 }
 
-const { SITE_TITLE, SITE_DESCRIPTION } = import.meta.env;
+const { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } = import.meta.env;
 let {
   generator,
-  props: { wideScreen = false, title, description },
+  props: {
+    wideScreen = false,
+    title = SITE_TITLE,
+    description = SITE_DESCRIPTION,
+  },
 } = Astro;
 
-title = title || SITE_TITLE;
-description = description || SITE_DESCRIPTION;
+title = title + ' - ' + SITE_NAME;
 ---
 
 <html lang="ko">
@@ -27,7 +30,6 @@ description = description || SITE_DESCRIPTION;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={generator} />
-    <meta name="theme-color" content="#60a5fa" />
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />

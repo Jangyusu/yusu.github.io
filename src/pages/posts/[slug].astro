@@ -26,12 +26,13 @@ const { entry, prevEntry, nextEntry } = Astro.props;
 const { title, createDate } = entry.data;
 const { Content } = await entry.render();
 
+const description = entry.body.substring(0, 100);
 const formatDate = `${createDate.getFullYear()}년 ${String(
   createDate.getMonth() + 1
 ).padStart(2, '0')}월 ${String(createDate.getDate()).padStart(2, '0')}일`;
 ---
 
-<Layout>
+<Layout title={title} description={description}>
   <div class="my-10 flex flex-col items-center justify-between">
     <time>
       {formatDate}
