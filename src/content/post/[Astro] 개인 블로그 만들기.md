@@ -139,10 +139,7 @@ export const getTheme = () => {
 };
 ```
 
-<figure>
-  <img alt="astro" src="https://github.com/Jangyusu/yusu.log/assets/60203731/adedeb9b-fd31-42b4-9efc-51bffa6e97e8" />
-  <figcaption>Dark Theme 적용</figcaption>
-</figure>
+![Dark Theme 적용](https://github.com/Jangyusu/yusu.log/assets/60203731/adedeb9b-fd31-42b4-9efc-51bffa6e97e8)
 
 ## 앞으로
 
