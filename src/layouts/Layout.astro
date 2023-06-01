@@ -5,6 +5,7 @@ import ThemeScript from '@layouts/ThemeScript.astro';
 import GoogleAnalyticsScript from '@layouts/GoogleAnalyticsScript.astro';
 import GoogleSearchConsole from './GoogleSearchConsole.astro';
 import FaviconData from './FaviconData.astro';
+import { AppConfig } from '@/utils/AppConfig';
 
 interface Props {
   wideScreen?: boolean;
@@ -12,14 +13,14 @@ interface Props {
   description?: string;
 }
 
-const { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } = import.meta.env;
 let {
   generator,
   props: { wideScreen = false, title, description },
 } = Astro;
 
-title = (title || SITE_TITLE) + ' - ' + SITE_NAME;
-description = description || SITE_DESCRIPTION;
+const { siteName, siteTitle, siteDescription } = AppConfig;
+title = (title || siteTitle) + ' - ' + siteName;
+description = description || siteDescription;
 ---
 
 <html lang="ko">
