@@ -5,6 +5,7 @@ import ThemeScript from '@layouts/ThemeScript.astro';
 import GoogleAnalyticsScript from '@layouts/GoogleAnalyticsScript.astro';
 import GoogleSearchConsole from './GoogleSearchConsole.astro';
 import FaviconData from './FaviconData.astro';
+import KakaoScript from './KakaoScript.astro';
 import { AppConfig } from '@/utils/AppConfig';
 
 interface Props {
@@ -52,6 +53,7 @@ description = description || siteDescription;
     <ThemeScript />
     <GoogleAnalyticsScript />
     <GoogleSearchConsole />
+    <KakaoScript />
   </head>
   <body class="pb-10 bg-white dark:bg-gray-900">
     <div>

@@ -4,6 +4,7 @@ import GiscusScript from '@/layouts/GiscusScript.astro';
 import Layout from '@layouts/Layout.astro';
 import Footer from '@/components/Footer.astro';
 import ClipboardLink from '@/components/ClipboardLink.astro';
+import KakaoLink from '@/components/KakaoLink.astro';
 
 export async function getStaticPaths() {
   const postEntries = await getCollection('post');
@@ -45,6 +46,7 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
     </h1>
   </div>
   <div class="flex justify-center items-center gap-3">
+    <KakaoLink title={title} description={description} />
     <ClipboardLink />
   </div>
   <div
