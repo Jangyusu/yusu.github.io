@@ -18,11 +18,11 @@ const allCategories = [
 ---
 
 <Layout wideScreen>
-  <div class="flex flex-col md:flex-row gap-10">
+  <div class="flex flex-col gap-10 md:flex-row">
     <div class="min-w-0 flex-1">
       <PostList posts={postEntriesByCategory} />
     </div>
-    <div class="w-full h-max md:w-[12rem] md:sticky md:top-10">
+    <div class="h-max w-full md:sticky md:top-10 md:w-[12rem]">
       <CategoryList
         categories={allCategories}
         selectedCategory={selectedCategory}

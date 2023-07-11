@@ -45,25 +45,25 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
       {title}
     </h1>
   </div>
-  <div class="flex justify-center items-center gap-3">
+  <div class="flex items-center justify-center gap-3">
     <KakaoLink title={title} description={description} />
     <ClipboardLink />
   </div>
   <div
-    class="mt-10 prose prose-p:font-light prose-h2:text-cyan-500 dark:prose-h2:text-cyan-500 prose-p:text-gray-600 dark:prose-p:text-gray-400 prose-img:rounded-lg prose-a:text-cyan-500 dark:prose-a:text-cyan-500"
+    class="prose mt-10 prose-h2:text-cyan-500 prose-p:font-light prose-p:text-gray-600 prose-a:text-cyan-500 prose-img:rounded-lg dark:prose-h2:text-cyan-500 dark:prose-p:text-gray-400 dark:prose-a:text-cyan-500"
   >
     <Content />
   </div>
 
   {
     (prevEntry || nextEntry) && (
-      <div class="pt-12 pb-8 flex flex-col-reverse justify-between items-stretch gap-6">
+      <div class="flex flex-col-reverse items-stretch justify-between gap-6 pb-8 pt-12">
         {prevEntry && (
           <a
             href={`${import.meta.env.BASE_URL}posts/${prevEntry?.slug}`}
             class="w-full"
           >
-            <button class="w-full h-full p-4 bg-gray-100 dark:bg-gray-800 flex justify-start items-center gap-3">
+            <button class="flex h-full w-full items-center justify-start gap-3 bg-gray-100 p-4 dark:bg-gray-800">
               <span class="material-symbols-rounded text-4xl text-cyan-500 dark:text-cyan-500">
                 arrow_circle_left
               </span>
@@ -71,7 +71,7 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
                 <p class="text-xs text-gray-700 dark:text-gray-300">
                   이전 포스트
                 </p>
-                <p class="text-gray-900 dark:text-gray-100 text-left">
+                <p class="text-left text-gray-900 dark:text-gray-100">
                   {prevEntry?.data.title}
                 </p>
               </div>
@@ -84,12 +84,12 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
             href={`${import.meta.env.BASE_URL}posts/${nextEntry?.slug}`}
             class="w-full"
           >
-            <button class="w-full h-full p-4 bg-gray-100 dark:bg-gray-800 flex justify-end items-center gap-3">
+            <button class="flex h-full w-full items-center justify-end gap-3 bg-gray-100 p-4 dark:bg-gray-800">
               <div class="flex flex-col items-end gap-0.5">
                 <p class="text-xs text-gray-700 dark:text-gray-300">
                   다음 포스트
                 </p>
-                <p class="text-gray-900 dark:text-gray-100 text-right">
+                <p class="text-right text-gray-900 dark:text-gray-100">
                   {nextEntry?.data.title}
                 </p>
               </div>

@@ -72,15 +72,15 @@ createDate: 2023-05-28
 <button
   role="checkbox"
   tabindex="0"
-  class="theme-switcher cursor-pointer w-11 h-5 bg-gray-200 rounded-full px-1.5 flex items-center justify-end dark:justify-start dark:bg-gray-700 relative"
+  class="theme-switcher relative flex h-5 w-11 cursor-pointer items-center justify-end rounded-full bg-gray-200 px-1.5 dark:justify-start dark:bg-gray-700"
 >
   <div
-    class="w-4 h-4 rounded-full absolute transform ease-out bg-white dark:bg-gray-800 left-0.5 translate-x-0 dark:translate-x-6"
+    class="absolute left-0.5 h-4 w-4 translate-x-0 transform rounded-full bg-white ease-out dark:translate-x-6 dark:bg-gray-800"
   >
   </div>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="h-3 w-3 text-white dark:block hidden"
+    class="hidden h-3 w-3 text-white dark:block"
     viewBox="0 0 20 20"
     fill="#FFFFFF"
   >
@@ -89,7 +89,7 @@ createDate: 2023-05-28
   </svg>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="h-3 w-3 text-white dark:hidden block"
+    class="block h-3 w-3 text-white dark:hidden"
     viewBox="0 0 20 20"
     fill="#FFD43B"
   >

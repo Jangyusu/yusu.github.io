@@ -15,6 +15,6 @@ const sortedPosts = posts.sort(
 );
 ---
 
-<ul class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+<ul class="grid grid-cols-1 gap-10 lg:grid-cols-3">
   {sortedPosts.map((post) => <PostItem post={post} />)}
 </ul>

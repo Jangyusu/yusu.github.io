@@ -22,7 +22,7 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
 <li>
   <a
     href={`${import.meta.env.BASE_URL}posts/${slug}`}
-    class="flex flex-col group"
+    class="group flex flex-col"
   >
     <span
       class:list={[
@@ -38,7 +38,7 @@ const formatDate = `${createDate.getFullYear()}년 ${String(
     <h1 class="mt-2 text-xl font-bold leading-7 group-hover:underline">
       {title}
     </h1>
-    <p class="mt-3 text-gray-500 dark:text-gray-500 line-clamp-3">
+    <p class="mt-3 line-clamp-3 text-gray-500 dark:text-gray-500">
       {description}
     </p>
     <time class="mt-3 text-gray-600 dark:text-gray-400">

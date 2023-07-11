@@ -10,7 +10,7 @@ const { categories, selectedCategory } = Astro.props;
 ---
 
 <div class="mt-6 md:mt-0">
-  <p class="text-sm text-gray-700 dark:text-gray-300 font-bold">카테고리</p>
+  <p class="text-sm font-bold text-gray-700 dark:text-gray-300">카테고리</p>
   <ul class="mt-4">
     <CategoryItem category="all" isSelected={selectedCategory === 'all'} />
     {
