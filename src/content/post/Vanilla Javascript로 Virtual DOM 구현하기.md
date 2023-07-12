@@ -6,139 +6,256 @@ createDate: 2023-07-11
 
 가상 DOM(Virtual DOM)은 웹 애플리케이션의 성능을 향상시키기 위해 사용되는 기술입니다. 이번 포스트에서는 Vanilla JavaScript를 사용하여 가상 DOM을 구현하는 방법에 대해 자세히 알아보겠습니다.
 
-## 가상 DOM(Virtual DOM)이란?
+## 가상 DOM(Virtual Document Object Model)
 
-가상 DOM은 실제 DOM(Document Object Model)과 대응되는 메모리 상의 가벼운 복사본입니다. 웹 애플리케이션에서는 사용자 인터랙션에 따라 DOM이 동적으로 변경되는데, 이때마다 실제 DOM을 직접 조작하는 것은 비용이 많이 들게 됩니다. 따라서 가상 DOM을 사용하여 변경 사항을 추적하고, 최적화된 방식으로 실제 DOM에 반영하는 것입니다.
+가상 DOM(Virtual DOM)은 JavaScript 라이브러리 또는 프레임워크에서 사용되는 개념으로, 웹 애플리케이션의 효율성과 성능을 개선하기 위해 도입되었습니다. 가상 DOM은 실제 DOM(Document Object Model)의 가벼운 복사본이며, 실제 DOM과 동기화하여 업데이트되는 방식으로 동작합니다.
 
-## 가상 DOM 구현하기
+실제 DOM은 웹 페이지의 구조를 표현하는 계층적인 객체 모델로, HTML 문서의 요소에 접근하고 조작할 수 있는 인터페이스를 제공합니다. 하지만 실제 DOM은 작은 변경 사항에도 전체 페이지를 다시 렌더링해야 하므로, 복잡한 애플리케이션에서는 성능 문제가 발생할 수 있습니다.
 
-Vanilla JavaScript를 사용하여 가상 DOM을 구현해보겠습니다. 아래와 같은 단계로 진행할 수 있습니다.
+## 가상 DOM을 사용하는 이유
 
-1. 가상 DOM 요소 생성하기
-   가상 DOM 요소를 나타내는 JavaScript 객체를 생성합니다. 각 객체는 태그 이름, 속성, 자식 요소 등을 포함합니다. 예를 들어, div 요소를 나타내는 가상 DOM 요소 객체는 다음과 같습니다.
+가상 DOM은 실제 DOM과 동기화되어 업데이트됩니다. 이를 통해 작은 변경 사항에도 전체 페이지를 다시 렌더링하지 않고 필요한 부분만 업데이트할 수 있습니다. 이러한 가상 DOM의 장점은 다음과 같습니다.
 
-   ```javascript
-   const virtualElement = {
-     tag: 'div',
-     attrs: {
-       id: 'myDiv',
-       class: 'container',
-     },
-     children: [
-       {
-         tag: 'h1',
-         attrs: {
-           class: 'title',
-         },
-         children: ['Hello, Virtual DOM!'],
-       },
-       {
-         tag: 'p',
-         attrs: {},
-         children: ['This is a paragraph.'],
-       },
-     ],
-   };
-   ```
+1. `성능 개선`: 가상 DOM은 변경된 부분만을 업데이트하여 실제 DOM 조작을 최소화하므로 성능이 향상됩니다. 실제 DOM은 작은 변경 사항에도 전체 페이지를 다시 렌더링해야 하지만, 가상 DOM은 변경된 부분만을 처리하여 불필요한 작업을 줄입니다.
 
-2. 가상 DOM 업데이트하기
-   가상 DOM은 실제 DOM과 동기화되어야 합니다. 따라서 가상 DOM을 업데이트하는 함수를 작성해야 합니다. 이 함수는 변경된 가상 DOM 요소를 기반으로 새로운 가상 DOM 트리를 생성하고, 이전 가상 DOM과 비교하여 변경 사항을 찾습니다.
+2. `효율적인 렌더링`: 가상 DOM을 사용하면 실제 DOM을 직접 조작하는 대신 가상 DOM을 조작하므로, 실제 DOM 조작으로 인한 렌더링 비용을 줄일 수 있습니다. 또한, 가상 DOM은 변경 사항을 일괄적으로 처리하여 렌더링 주기를 최적화할 수 있습니다.
 
-   ```javascript
-   // 가상 DOM을 업데이트하는 함수
-   function updateVirtualDOM(oldVirtualDOM, newVirtualDOM) {
-     // 가상 DOM의 태그 이름이 다르면 전체를 업데이트해야 함
-     if (oldVirtualDOM.tag !== newVirtualDOM.tag) {
-       // 새로운 가상 DOM으로 대체
-       return newVirtualDOM;
-     }
+3. `상태 관리`: 가상 DOM은 애플리케이션의 상태 관리와 함께 사용될 수 있습니다. 예를 들어, 리액트는 가상 DOM과 함께 상태 관리 라이브러리인 리덕스와 결합하여 상태의 변화에 따른 가상 DOM 업데이트를 효율적으로 처리할 수 있습니다.
 
-     // 가상 DOM의 태그 이름이 같으면 속성과 자식 요소를 업데이트함
-     const updatedVirtualDOM = {
-       tag: oldVirtualDOM.tag,
-       attrs: { ...oldVirtualDOM.attrs, ...newVirtualDOM.attrs },
-       children: [],
-     };
+4. `팀 협업과 유지 보수`: 가상 DOM은 컴포넌트 기반 개발을 지원하여 여러 개발자가 동시에 작업하고 개별 컴포넌트를 재사용할 수 있습니다. 또한, 가상 DOM은 UI 로직과 상태를 분리하여 코드의 가독성과 유지 보수성을 향상시킵니다.
 
-     // 자식 요소의 개수를 비교하여 업데이트
-     const oldChildren = oldVirtualDOM.children || [];
-     const newChildren = newVirtualDOM.children || [];
-     const count = Math.max(oldChildren.length, newChildren.length);
-     for (let i = 0; i < count; i++) {
-       const oldChild = oldChildren[i];
-       const newChild = newChildren[i];
+가상 DOM은 현대적인 웹 애플리케이션 개발에서 널리 사용되며, 다양한 라이브러리와 프레임워크에서 가상 DOM 개념을 활용하여 효율적이고 성능 우수한 애플리케이션을 구축할 수 있습니다.
 
-       if (oldChild && !newChild) {
-         // 이전에 있던 자식 요소가 새로운 가상 DOM에서 제거되었을 경우
-         updatedVirtualDOM.children.push(null);
-       } else if (!oldChild && newChild) {
-         // 새로 추가된 자식 요소
-         updatedVirtualDOM.children.push(newChild);
-       } else {
-         // 두 자식 요소를 재귀적으로 업데이트
-         const updatedChild = updateVirtualDOM(oldChild, newChild);
-         updatedVirtualDOM.children.push(updatedChild);
-       }
-     }
+## 가상 DOM의 구조
 
-     return updatedVirtualDOM;
-   }
-   ```
+가상 DOM은 일반적으로 트리 구조로 표현됩니다. 트리 구조는 노드(Node)와 간선(Edge)으로 이루어진 계층적인 데이터 구조입니다. 가상 DOM 트리는 웹 애플리케이션의 UI 계층을 반영하며, 각 노드는 HTML 요소를 나타냅니다.
 
-3. 실제 DOM에 변경 사항 반영하기
-   가상 DOM을 업데이트한 후, 변경된 부분만 실제 DOM에 반영해야 합니다. 이를 위해 변경된 부분을 식별하고, 이전 상태와 현재 상태를 비교하여 변경이 필요한 부분만 업데이트하는 로직을 작성해야 합니다.
+예를 들어, 다음과 같은 HTML 구조를 생각해보겠습니다:
 
-   ```javascript
-   // 변경 사항을 실제 DOM에 반영하는 함수
-   function updateDOM(element, virtualElement) {
-     if (!element) {
-       // element가 undefined인 경우, 새로운 요소로 대체
-       const newElement = createElement(virtualElement);
-       const rootElement = document.getElementById('root');
-       rootElement.appendChild(newElement);
-       return newElement;
-     }
+```html
+<div id="app">
+  <h1>Hello, World!</h1>
+  <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+  </ul>
+</div>
+```
 
-     if (!element.tagName || !virtualElement.tag) {
-       return element;
-     }
+위의 HTML은 가상 DOM 트리로 표현하면 다음과 같을 수 있습니다:
 
-     // 현재 요소와 가상 DOM 요소의 태그 이름이 다르면 전체를 업데이트해야 함
-     if (element.tagName.toLowerCase() !== virtualElement.tag.toLowerCase()) {
-       // 새로운 요소로 대체
-       const newElement = createElement(virtualElement);
-       element.parentNode.replaceChild(newElement, element);
-       return newElement;
-     }
+```markdown
+- div#app
+  - h1
+    - "Hello, World!"
+  - ul
+    - li
+      - "Item 1"
+    - li
+      - "Item 2"
+    - li
+      - "Item 3"
+```
 
-     // 자식 요소 업데이트
-     const oldChildren = Array.from(element.childNodes);
-     const newChildren = virtualElement.children || [];
-     const count = Math.max(oldChildren.length, newChildren.length);
-     for (let i = 0; i < count; i++) {
-       const oldChild = oldChildren[i];
-       const newChild = newChildren[i];
+각 노드는 트리에서의 위치와 노드의 유형에 따라 다른 속성을 가질 수 있습니다. 예를 들어, "div#app"는 실제 DOM에서의 id 속성을 나타내는 "app" 속성을 가질 수 있습니다. 이러한 속성들은 실제 DOM 업데이트 시에 사용되며, 변경된 부분을 찾는 데 도움을 줍니다.
 
-       if (oldChild && !newChild) {
-         // 이전에 있던 자식 요소가 새로운 가상 DOM에서 제거되었을 경우
-         element.removeChild(oldChild);
-       } else if (!oldChild && newChild) {
-         // 새로 추가된 자식 요소
-         element.appendChild(createElement(newChild));
-       } else {
-         // 두 자식 요소를 재귀적으로 업데이트
-         updateDOM(oldChild, newChild);
-       }
-     }
+가상 DOM은 효율적인 업데이트를 위해 변경된 부분을 추적하고 최소한의 작업만을 수행합니다. 변경 사항을 감지하고 가상 DOM을 업데이트한 후에는 실제 DOM과 비교하여 변경된 부분만을 업데이트합니다. 이를 통해 불필요한 렌더링 작업을 줄이고 성능을 개선할 수 있습니다.
 
-     return element;
-   }
-   ```
+프레임워크나 라이브러리에서 가상 DOM을 사용할 때는 가상 DOM의 구조와 업데이트 방식을 자동으로 처리하는 API와 알고리즘을 제공합니다. 이를 통해 개발자는 가상 DOM을 직접 다루지 않고도 효율적인 UI 업데이트를 구현할 수 있습니다.
 
-위의 로직을 활용하여 `updateVirtualDOM` 함수로 가상 DOM을 업데이트하고, `updateDOM` 함수로 변경 사항을 실제 DOM에 반영할 수 있습니다. 이를 통해 가상 DOM을 효과적으로 관리하고 실제 DOM 조작을 최소화하여 웹 애플리케이션의 성능을 개선할 수 있습니다.
+## 가상 DOM 직접 구현하기
 
-## 가상 DOM 활용하기
+만약 가상 DOM을 직접 구현한다면 어떻게 구현할 수 있을까요? 가상 DOM을 직접 구현하는 것은 어려운 일이지만, 가상 DOM의 구조와 업데이트 방식을 이해하는 데 도움이 될 수 있습니다.
 
-가상 DOM을 활용하면 DOM 조작 비용을 줄이고 웹 애플리케이션의 성능을 향상시킬 수 있습니다. 또한, 가상 DOM을 사용하면 JavaScript와 독립적으로 작업할 수 있어 코드 유지보수도 용이해집니다.
+```html
+<div id="app">
+  <form>
+    <input type="text" />
+    <button type="submit">추가</button>
+  </form>
+  <ul>
+    <li>
+      <input type="checkbox" />
+      todo item 1
+      <button class="remove">삭제</button>
+    </li>
+    <li>
+      <input type="checkbox" />
+      todo item 2
+      <button class="remove">삭제</button>
+    </li>
+  </ul>
+</div>
+```
 
-이제 Vanilla JavaScript로 가상 DOM을 구현하는 방법에 대해 자세히 알아보았습니다. 이를 통해 웹 애플리케이션의 성능을 향상시키고 유지보수성을 높일 수 있습니다.
+위의 HTML은 간단한 TODO 리스트를 나타냅니다. 이를 가상 DOM 트리로 표현하면 다음과 같을 수 있습니다.
+
+```markdown
+- div#app
+  - form
+    - input[type="text"]
+    - button[type="submit"]
+  - ul
+    - li
+      - input[type="checkbox"]
+      - "todo item 1"
+      - button.remove
+        - "삭제"
+    - li
+      - input[type="checkbox"]
+      - "todo item 2"
+      - button.remove
+        - "삭제"
+```
+
+위 트리를 사용하여 TODO 리스트를 구현해보겠습니다. 먼저, 가상 DOM은 다음과 같이 구성되어있을 수 있습니다.
+
+```javascript
+const virtualDOM = (type, props, ...children) => {
+  return { type, props, children: children.flat() };
+};
+
+virtualDOM(
+  'div',
+  { id: 'app' },
+  virtualDOM(
+    'form',
+    null,
+    virtualDOM('input', { type: 'text' }),
+    virtualDOM('button', { type: 'submit' }, '추가')
+  ),
+  virtualDOM(
+    'ul',
+    null,
+    virtualDOM(
+      'li',
+      null,
+      virtualDOM('input', { type: 'checkbox' }),
+      'todo item 1',
+      virtualDOM('button', { className: 'remove' }, '삭제')
+    ),
+    virtualDOM(
+      'li',
+      null,
+      virtualDOM('input', { type: 'checkbox' }),
+      'todo item 2',
+      virtualDOM('button', { className: 'remove' }, '삭제')
+    )
+  )
+);
+```
+
+`virtualDOM`을 사용하여 가상 DOM을 생성하면 아래와 같은 객체가 생성됩니다.
+
+```javascript
+{
+  "type": "div",
+  "props": {
+    "id": "app"
+  },
+  "children": [
+    {
+      "type": "form",
+      "props": null,
+      "children": [
+        {
+          "type": "input",
+          "props": {
+            "type": "text"
+          },
+          "children": []
+        },
+        {
+          "type": "button",
+          "props": {
+            "type": "submit"
+          },
+          "children": [
+            "추가"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ul",
+      "props": null,
+      "children": [
+        {
+          "type": "li",
+          "props": null,
+          "children": [
+            {
+              "type": "input",
+              "props": {
+                "type": "checkbox"
+              },
+              "children": []
+            },
+            "todo item 1",
+            {
+              "type": "button",
+              "props": {
+                "className": "remove"
+              },
+              "children": [
+                "삭제"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "li",
+          "props": null,
+          "children": [
+            {
+              "type": "input",
+              "props": {
+                "type": "checkbox"
+              },
+              "children": []
+            },
+            "todo item 2",
+            {
+              "type": "button",
+              "props": {
+                "className": "remove"
+              },
+              "children": [
+                "삭제"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+이렇게 생성된 객체를 이용해 실제 DOM을 생성할 수 있습니다.
+
+```javascript
+const virtualDOM = (type, props, ...children) => {
+  /* 생략 */
+};
+
+createVirtualDOM(
+  <div id="app">
+    <form>
+      <input type="text" />
+      <button type="submit">추가</button>
+    </form>
+    <ul>
+      <li>
+        <input type="checkbox" />
+        todo item 1<button class="remove">삭제</button>
+      </li>
+      <li>
+        <input type="checkbox" />
+        todo item 2<button class="remove">삭제</button>
+      </li>
+    </ul>
+  </div>
+);
+```
