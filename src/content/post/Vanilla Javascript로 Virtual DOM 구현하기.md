@@ -10,7 +10,7 @@ createDate: 2023-07-11
 
 그래서 이번 포스트에서는 가상 DOM이 무엇이고 이를 활용하면 어떤 이점이 있는지, 또 직접 `Vanilla JavaScript`를 사용하여 가상 DOM을 구현하는 방법에 대해 알아보려고 한다.
 
-## 가상 DOM(Virtual Document Object Model)이 뭘까?
+## 가상 DOM(Virtual Document Object Model)이 뭐야?
 
 가상 DOM은 UI의 가상 표현을 메모리에 유지하고, 실제 DOM 과 동기화하는 프로그래밍 개념으로 실제 DOM과 동기화하여 업데이트되는 방식으로 동작한다.
 
@@ -18,19 +18,27 @@ createDate: 2023-07-11
 
 하지만 실제 DOM은 작은 변경 사항에도 전체 페이지를 다시 렌더링해야 하므로, 복잡한 애플리케이션에서는 성능 문제가 발생할 수 있다.
 
-## 웹 페이지 렌더링 과정
+## 브라우저 렌더링 과정
 
-웹 페이지는 렌더링 엔진에 의해 렌더링되며, 렌더링 엔진은 HTML 문서를 파싱하여 DOM 트리를 생성하고, CSS 파일을 파싱하여 CSSOM 트리를 생성한다.
+브라우저는 렌더링 엔진에 의해 렌더링되며, 렌더링 엔진은 HTML 문서를 파싱하여 DOM 트리를 생성하고, CSS 파일을 파싱하여 CSSOM 트리를 생성한다.
 
-그리고, DOM 트리와 CSSOM 트리를 결합하여 렌더 트리를 생성하고, 렌더 트리를 기반으로 페이지를 렌더링한다.
+그리고, DOM 트리와 CSSOM 트리를 결합하여 Render 트리를 생성하고, Render 트리를 기반으로 페이지를 렌더링한다.
 
-![렌더링 과정](https://web-dev.imgix.net/image/C47gYyWYVMMhDmtYSLOWazuyePF2/b6Z2Gu6UD1x1imOu1tJV.png?auto=format)
+이어서 Render 트리의 각 노드의 크기와 위치를 계산하는 Layout 과정을 거치고, Layout을 기반으로 각 노드의 스타일을 적용하는 Paint 과정을 거친다.
 
-- DOM 트리는 HTML 문서의 요소에 접근하고 조작할 수 있는 인터페이스를 제공한다. DOM 트리는 계층적인 트리 구조로 표현되며, 각 노드는 HTML 요소를 나타낸다.
+이런 과정을 거쳐 웹 페이지가 사용자에게 보여지게 된다.
 
-- CSSOM 트리는 CSS 파일의 스타일 정보를 표현하는 트리 구조로, 각 노드는 CSS 스타일 정보를 나타낸다.
+![브라우저 렌더링 과정](https://www.webperf.tips/static/4e73c9992ce3b9177bcc80a2113b3138/712f7/BrowserRenderingPipeline01.png)
 
-- 렌더 트리는 DOM 트리와 CSSOM 트리를 결합하여 생성되는 트리 구조로, 각 노드는 렌더링을 위한 최종 정보를 나타내고 이를 기반으로 페이지를 렌더링한다.
+1. DOM 트리는 HTML 문서의 요소에 접근하고 조작할 수 있는 인터페이스를 제공한다. DOM 트리는 계층적인 트리 구조로 표현되며, 각 노드는 HTML 요소를 나타낸다.
+
+2. CSSOM 트리는 CSS 파일의 스타일 정보를 표현하는 트리 구조로, 각 노드는 CSS 스타일 정보를 나타낸다.
+
+3. Render 트리는 DOM 트리와 CSSOM 트리를 결합하여 생성되는 트리 구조로, 각 노드는 렌더링을 위한 최종 정보를 나타내고 이를 기반으로 페이지를 렌더링한다.
+
+4. Layout은 Render 트리를 기반으로 각 노드의 크기와 위치를 계산하는 과정이다.
+
+5. Paint는 Layout을 기반으로 각 노드의 스타일을 적용하는 과정이다.
 
 ## 가상 DOM을 사용하는 이유
 
@@ -316,100 +324,141 @@ createElement(
 ### 실제 DOM 업데이트
 
 ```javascript
-function updateElement(parent, newNode, oldNode) {
-  // oldNode가 없다면 newNode를 추가
-  if (!oldNode) {
-    parent.appendChild(createElement(newNode));
+function updateElement(parent, oldNode, newNode) {
+  // oldNode와 newNode가 동일한 경우 업데이트 불필요
+  if (oldNode === newNode) {
+    return;
   }
 
-  // newNode가 없다면 oldNode를 제거
-  else if (!newNode) {
-    parent.removeChild(parent.childNodes[0]);
-  }
-
-  // 두 노드가 모두 텍스트 노드라면 텍스트 노드를 업데이트
-  else if (typeof newNode === 'string' && typeof oldNode === 'string') {
-    if (newNode !== oldNode) {
-      parent.textContent = newNode;
-    }
-  }
-
-  // 두 노드의 타입이 다르다면 newNode로 교체
-  else if (newNode.type !== oldNode.type) {
-    parent.replaceChild(createElement(newNode), parent.childNodes[0]);
-  }
-
-  // 두 노드의 타입이 같다면 업데이트
-  else {
-    const target = parent.childNodes[0];
-    updateProps(target, newNode.props, oldNode.props);
-
-    const newLength = newNode.children.length;
-    const oldLength = oldNode.children.length;
-
-    // 두 노드의 자식 노드를 업데이트
-    for (let i = 0; i < newLength || i < oldLength; i++) {
-      updateElement(target, newNode.children[i], oldNode.children[i]);
-    }
-  }
-
-  function updateProps(target, newProps, oldProps = {}) {
-    const props = Object.assign({}, newProps, oldProps);
-
-    // newProps와 oldProps를 비교하여 변경된 부분만 업데이트
-    for (let key in props) {
-      if (!newProps[key]) {
-        target.removeAttribute(key);
-      } else if (!oldProps[key] || newProps[key] !== oldProps[key]) {
-        target.setAttribute(key, newProps[key]);
+  // newNode가 텍스트 노드인 경우
+  if (typeof newNode === 'string') {
+    // oldNode도 텍스트 노드인 경우 텍스트 내용 업데이트
+    if (typeof oldNode === 'string') {
+      if (oldNode !== newNode) {
+        parent.firstChild.nodeValue = newNode;
       }
+    }
+    // oldNode가 텍스트 노드가 아닌 경우 새로운 텍스트 노드로 대체
+    else {
+      const newTextNode = document.createTextNode(newNode);
+      parent.textContent = '';
+      parent.appendChild(newTextNode);
+    }
+  }
+
+  // newNode가 객체인 경우
+  if (typeof newNode === 'object') {
+    // oldNode가 객체인 경우 타입 비교
+    if (typeof oldNode === 'object') {
+      // 타입이 다른 경우 노드를 새로 생성하여 대체
+      if (oldNode.type !== newNode.type) {
+        const newElement = createElement(newNode);
+        parent.replaceChild(newElement, parent.firstChild);
+      }
+      // 타입이 동일한 경우 props와 children 업데이트
+      else {
+        // props 업데이트
+        const element = parent.firstChild;
+        const { props: oldProps, children: oldChildren } = oldNode;
+        const { props: newProps, children: newChildren } = newNode;
+
+        // 새로운 props 추가
+        for (let key in newProps) {
+          if (newProps.hasOwnProperty(key)) {
+            element.setAttribute(key, newProps[key]);
+          }
+        }
+
+        // 기존 props 삭제
+        for (let key in oldProps) {
+          if (oldProps.hasOwnProperty(key) && !newProps.hasOwnProperty(key)) {
+            element.removeAttribute(key);
+          }
+        }
+
+        // children 업데이트
+        const maxLength = Math.max(oldChildren.length, newChildren.length);
+        for (let i = 0; i < maxLength; i++) {
+          updateElement(element, oldChildren[i], newChildren[i]);
+        }
+      }
+    }
+    // oldNode가 객체가 아닌 경우 newNode로 대체
+    else {
+      const newElement = createElement(newNode);
+      parent.textContent = '';
+      parent.appendChild(newElement);
     }
   }
 }
 
-const render = (
-  <div id="app">
-    <form>
-      <input type="text" />
-      <button type="submit">추가</button>
-    </form>
-    <ul>
-      <li>
-        <input type="checkbox" />
-        todo item 1<button class="remove">삭제</button>
-      </li>
-      <li>
-        <input type="checkbox" />
-        todo item 2<button class="remove">삭제</button>
-      </li>
-    </ul>
-  </div>
+const oldNode = createElement(
+  virtualDOM(
+    'div',
+    { id: 'app' },
+    virtualDOM(
+      'form',
+      null,
+      virtualDOM('input', { type: 'text' }),
+      virtualDOM('button', { type: 'submit' }, '추가')
+    ),
+    virtualDOM(
+      'ul',
+      null,
+      virtualDOM(
+        'li',
+        null,
+        virtualDOM('input', { type: 'checkbox' }),
+        'todo item 1',
+        virtualDOM('button', { className: 'remove' }, '삭제')
+      ),
+      virtualDOM(
+        'li',
+        null,
+        virtualDOM('input', { type: 'checkbox' }),
+        'todo item 2',
+        virtualDOM('button', { className: 'remove' }, '삭제')
+      )
+    )
+  )
 );
 
-document.body.appendChild(render);
-
-const oldNode = render;
-const newNode = (
-  <div id="app">
-    <form>
-      <input type="text" />
-      <button type="submit">추가</button>
-    </form>
-    <ul>
-      <li>
-        <input type="checkbox" />
-        todo item 1<button class="remove">삭제</button>
-      </li>
-      <li>
-        <input type="checkbox" />
-        todo item 2<button class="remove">삭제</button>
-      </li>
-      <li>
-        <input type="checkbox" />
-        todo item 3<button class="remove">삭제</button>
-      </li>
-    </ul>
-  </div>
+const newNode = createElement(
+  virtualDOM(
+    'div',
+    { id: 'app' },
+    virtualDOM(
+      'form',
+      null,
+      virtualDOM('input', { type: 'text' }),
+      virtualDOM('button', { type: 'submit' }, '추가')
+    ),
+    virtualDOM(
+      'ul',
+      null,
+      virtualDOM(
+        'li',
+        null,
+        virtualDOM('input', { type: 'checkbox' }),
+        'todo item 1',
+        virtualDOM('button', { className: 'remove' }, '삭제')
+      ),
+      virtualDOM(
+        'li',
+        null,
+        virtualDOM('input', { type: 'checkbox' }),
+        'todo item 2',
+        virtualDOM('button', { className: 'remove' }, '삭제')
+      ),
+      virtualDOM(
+        'li',
+        null,
+        virtualDOM('input', { type: 'checkbox' }),
+        'todo item 2',
+        virtualDOM('button', { className: 'remove' }, '삭제')
+      )
+    )
+  )
 );
 
 updateElement(document.body, newNode, oldNode);
