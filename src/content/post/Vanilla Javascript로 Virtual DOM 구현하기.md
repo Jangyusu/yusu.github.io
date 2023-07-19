@@ -296,35 +296,154 @@ createElement(
 );
 ```
 
-위 코드를 실행하면 원하던 TODO 리스트가 생성된다.
+위 코드를 JSX로 표현하면 다음과 같다.
 
-```html
-<div id="app">
-  <form>
-    <input type="text" />
-    <button type="submit">추가</button>
-  </form>
-  <ul>
-    <li>
-      <input type="checkbox" />
-      todo item 1
-      <button class="remove">삭제</button>
-    </li>
-    <li>
-      <input type="checkbox" />
-      todo item 2
-      <button class="remove">삭제</button>
-    </li>
-  </ul>
-</div>
+```jsx
+const h = (type, props, ...children) => {
+  /* 생략 */
+};
+const createElement = (node) => {
+  /* 생략 */
+};
+
+createElement(
+  <div id="app">
+    <form>
+      <input type="text" />
+      <button type="submit">추가</button>
+    </form>
+    <ul>
+      <li>
+        <input type="checkbox" />
+        todo item 1<button class="remove">삭제</button>
+      </li>
+      <li>
+        <input type="checkbox" />
+        todo item 2<button class="remove">삭제</button>
+      </li>
+    </ul>
+  </div>
+);
 ```
 
-지금까지 가상 DOM을 이용해 실제 DOM을 생성하는 과정으로, 이제는 실제 DOM을 변경된 속성이나 태그에 맞게 업데이트 함으로써 성능상의 이점을 얻을 수 있다.
-
-### 실제 DOM 업데이트
+이어서 `state`를 적용해보자.
 
 ```javascript
-function updateElement(parent, oldNode, newNode) {
+const h = (type, props, ...children) => {
+  /* 생략 */
+};
+const createElement = (node) => {
+  /* 생략 */
+};
+
+const state = {
+  items: [
+    { id: 1, text: 'todo item 1', done: false },
+    { id: 2, text: 'todo item 2', done: false },
+  ],
+};
+
+createElement(
+  h(
+    'div',
+    { id: 'app' },
+    h(
+      'form',
+      null,
+      h('input', { type: 'text' }),
+      h('button', { type: 'submit' }, '추가')
+    ),
+    h(
+      'ul',
+      null,
+      state.items.map((item) =>
+        h(
+          'li',
+          null,
+          h('input', { type: 'checkbox' }),
+          item.text,
+          h('button', { className: 'remove' }, '삭제')
+        )
+      )
+    )
+  )
+);
+```
+
+위 코드를 JSX로 표현하면 다음과 같다.
+
+```jsx
+const h = (type, props, ...children) => {
+  /* 생략 */
+};
+const createElement = (node) => {
+  /* 생략 */
+};
+
+const state = {
+  items: [
+    { id: 1, text: 'todo item 1', done: false },
+    { id: 2, text: 'todo item 2', done: false },
+  ],
+};
+
+createElement(
+  <div id="app">
+    <form>
+      <input type="text" />
+      <button type="submit">추가</button>
+    </form>
+    <ul>
+      {state.items.map((item) => (
+        <li>
+          <input type="checkbox" />
+          {item.text}
+          <button class="remove">삭제</button>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+```
+
+점점 우리에게 익숙한 `JSX`문법으로 모습으로 변해가는 것을 볼 수 있다. 마지막으로 `updateElement`함수를 이용해 변경된 `state`를 반영해보자.
+
+### 실제 DOM 생성과 업데이트
+
+```jsx
+const h = (type, props, ...children) => {
+  return { type, props, children: children.flat() };
+};
+
+const createElement = (node) => {
+  // node가 string이라면 텍스트 노드를 생성
+  if (typeof node === 'string') {
+    return document.createTextNode(node);
+  }
+
+  const { type, props, children } = node;
+  const element = document.createElement(type);
+
+  // props가 존재한다면 element에 추가
+  if (props) {
+    for (let key in props) {
+      if (props.hasOwnProperty(key)) {
+        element.setAttribute(key, props[key]);
+      }
+    }
+  }
+
+  // children이 존재한다면 재귀적으로 createElement 실행
+  if (children && children.length > 0) {
+    children.forEach((child) => {
+      element.appendChild(createElement(child));
+    });
+  }
+
+  return element;
+};
+
+const updateElement = (parent, oldNode, newNode) => {
   // oldNode와 newNode가 동일한 경우 업데이트 불필요
   if (oldNode === newNode) {
     return;
@@ -390,76 +509,65 @@ function updateElement(parent, oldNode, newNode) {
       parent.appendChild(newElement);
     }
   }
-}
+};
 
-const oldNode = createElement(
-  virtualDOM(
-    'div',
-    { id: 'app' },
-    virtualDOM(
-      'form',
-      null,
-      virtualDOM('input', { type: 'text' }),
-      virtualDOM('button', { type: 'submit' }, '추가')
-    ),
-    virtualDOM(
-      'ul',
-      null,
-      virtualDOM(
-        'li',
-        null,
-        virtualDOM('input', { type: 'checkbox' }),
-        'todo item 1',
-        virtualDOM('button', { className: 'remove' }, '삭제')
-      ),
-      virtualDOM(
-        'li',
-        null,
-        virtualDOM('input', { type: 'checkbox' }),
-        'todo item 2',
-        virtualDOM('button', { className: 'remove' }, '삭제')
-      )
-    )
-  )
+const oldState = {
+  items: [
+    { id: 1, text: 'todo item 1', done: false },
+    { id: 2, text: 'todo item 2', done: false },
+  ],
+};
+
+const newState = {
+  items: [
+    { id: 1, text: 'todo item 1', done: false },
+    { id: 2, text: 'todo item 2', done: true },
+    { id: 3, text: 'todo item 3', done: true },
+  ],
+};
+
+const render = (state) => (
+  <div id="app">
+    <form>
+      <input type="text" />
+      <button type="submit">추가</button>
+    </form>
+    <ul>
+      {state.items.map((item) => (
+        <li>
+          <input type="checkbox" />
+          {item.text}
+          <button class="remove">삭제</button>
+        </li>
+      ))}
+    </ul>
+  </div>
 );
 
-const newNode = createElement(
-  virtualDOM(
-    'div',
-    { id: 'app' },
-    virtualDOM(
-      'form',
-      null,
-      virtualDOM('input', { type: 'text' }),
-      virtualDOM('button', { type: 'submit' }, '추가')
-    ),
-    virtualDOM(
-      'ul',
-      null,
-      virtualDOM(
-        'li',
-        null,
-        virtualDOM('input', { type: 'checkbox' }),
-        'todo item 1',
-        virtualDOM('button', { className: 'remove' }, '삭제')
-      ),
-      virtualDOM(
-        'li',
-        null,
-        virtualDOM('input', { type: 'checkbox' }),
-        'todo item 2',
-        virtualDOM('button', { className: 'remove' }, '삭제')
-      ),
-      virtualDOM(
-        'li',
-        null,
-        virtualDOM('input', { type: 'checkbox' }),
-        'todo item 2',
-        virtualDOM('button', { className: 'remove' }, '삭제')
-      )
-    )
-  )
-);
+const oldNode = render(oldState);
+const newNode = render(newState);
 
-updateElement(document.body, newNode, oldNode);
+const $root = document.createElement('div');
+document.body.appendChild($root);
+updateElement($root, oldNode);
+
+// 1초 뒤에 newNode로 업데이트
+setTimeout(() => updateElement($root, oldNode, newNode), 1000);
 ```
+
+간단하게 코드를 설명하면 다음과 같다.
+
+1. `h`함수를 이용해 `JSX`문법을 `DOM`노드로 변환한다.
+2. `render`함수를 이용해 `state`를 객체로 변환한다.
+3. `updateElement`함수를 이용해 `DOM`노드를 생성한다.
+4. 1초 뒤에 새로운 `state`를 반영해 `DOM`노드를 업데이트한다.
+
+### 정리
+
+지금까지 Javascript로 Virtual DOM을 직접 구현해보았는데 평소 React와 같은 프레임워크를 사용하면서 Virtual DOM이 어떻게 동작하는지, 어떤 원리로 동작하는지 궁금했었는데 이번 기회에 직접 구현해보면서 이해할 수 있었다.
+
+그리고 Virtual DOM을 구현하면서 가장 중요한 점은 이전 상태와 현재 상태를 비교해 변경 사항이 있는 부분만 업데이트함으로써 브라우저 reflow를 최소화하는 것이라고 생각한다.
+
+추후 Virtual DOM이 아닌 다른 방식으로 UI를 구현해보면서 어떤 방식이 더 효율적인지 비교해보고 싶다.
+
+끝.
