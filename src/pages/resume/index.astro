@@ -147,19 +147,46 @@ import Layout from '@/layouts/Layout.astro';
       <div class="space-y-10">
         <dl class="flex items-start">
           <dt class="flex w-28 flex-col font-semibold uppercase">
-            <span class="text-xs text-gray-400 dark:text-gray-600"
-              >Front-end</span
-            >
-            <span class="text-gray-700 dark:text-gray-300">프론트엔드</span>
+            <span class="text-xs text-gray-400 dark:text-gray-600">Core</span>
+            <span class="text-gray-700 dark:text-gray-300">코어</span>
           </dt>
           <dd class="flex-1">
-            <ul class="list-disc space-y-3 pl-10">
-              <li>HTML5, CSS(SCSS), JS(ES6)</li>
-              <li>React.js (Next.js) - Redux, React-Query, Zustand</li>
-              <li>Vue.js - Vuex</li>
+            <ul class="grid list-disc grid-cols-2 gap-3 pl-10">
+              <li>Vue.js</li>
+              <li>React.js</li>
+              <li>Next.js</li>
+              <li>Javacsript</li>
               <li>Typescript</li>
               <li>Websocket</li>
               <li>WebRTC</li>
+            </ul>
+          </dd>
+        </dl>
+        <dl class="flex items-start">
+          <dt class="flex w-28 flex-col font-semibold uppercase">
+            <span class="text-xs text-gray-400 dark:text-gray-600">State</span>
+            <span class="text-gray-700 dark:text-gray-300">상태 관리</span>
+          </dt>
+          <dd class="flex-1">
+            <ul class="grid list-disc grid-cols-2 gap-3 pl-10">
+              <li>Redux</li>
+              <li>React-Query</li>
+              <li>Zustand</li>
+              <li>Vuex</li>
+            </ul>
+          </dd>
+        </dl>
+        <dl class="flex items-start">
+          <dt class="flex w-28 flex-col font-semibold uppercase">
+            <span class="text-xs text-gray-400 dark:text-gray-600">Styling</span
+            >
+            <span class="text-gray-700 dark:text-gray-300">스타일링</span>
+          </dt>
+          <dd class="flex-1">
+            <ul class="grid list-disc grid-cols-2 gap-3 pl-10">
+              <li>Sass</li>
+              <li>Tailwind</li>
+              <li>Styled-Components</li>
             </ul>
           </dd>
         </dl>
@@ -171,9 +198,10 @@ import Layout from '@/layouts/Layout.astro';
             <span class="text-gray-700 dark:text-gray-300">협업</span>
           </dt>
           <dd class="flex-1">
-            <ul class="list-disc space-y-3 pl-10">
+            <ul class="grid list-disc grid-cols-2 gap-3 pl-10">
               <li>Jira & Bitbucket & Confluence</li>
               <li>Slack</li>
+              <li>Figma</li>
             </ul>
           </dd>
         </dl>
